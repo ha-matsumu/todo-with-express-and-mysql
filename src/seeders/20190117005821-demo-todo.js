@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    const demoTodos = [1,2,3,4,5].map((num) => {
+    const demoTodos = [1, 2, 3, 4, 5].map(num => {
       return {
         title: `demo title ${num}`,
         body: `I will show demo in meetup ${num}.`,
@@ -10,10 +10,10 @@ module.exports = {
       };
     });
 
-    return queryInterface.bulkInsert('Todos', demoTodos, {});
+    return queryInterface.bulkInsert("Todos", demoTodos, {});
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Todos', null, {});
+    return queryInterface.bulkDelete("Todos", null, {});
   }
 };
