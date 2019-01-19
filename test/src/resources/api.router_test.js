@@ -1,34 +1,76 @@
 const request = require("supertest");
 const app = require("../../../src/server");
 
-describe("GET /api", () => {
+function testGet(_url, _statusCode) {
+  return request(app)
+    .get(_url)
+    .expect(_statusCode);
+}
+
+function testPost(_url, _statusCode) {
+  return request(app)
+    .post(_url)
+    .expect(_statusCode);
+}
+
+function testPut(_url, _statusCode) {
+  return request(app)
+    .put(_url)
+    .expect(_statusCode);
+}
+
+function testDelete(_url, _statusCode) {
+  return request(app)
+    .delete(_url)
+    .expect(_statusCode);
+}
+
+// 正常系のテスト
+describe("GET /api/todos/1", () => {
   it("ステータスコード200になるはず", () => {
-    request(app)
-      .get("/api/todos")
-      .expect(200);
+    return testGet("/api/todos/1", 200);
   });
 });
 
-describe("POST /api", () => {
+describe("POST /api/todos/1", () => {
   it("ステータスコード200になるはず", () => {
-    request(app)
-      .post("/api/todos")
-      .expect(200);
+    return testPost("/api/todos/1", 200);
   });
 });
 
-describe("PUT /api", () => {
+describe("PUT /api/todos/1", () => {
   it("ステータスコード200になるはず", () => {
-    request(app)
-      .put("/api/todos")
-      .expect(200);
+    return testPut("/api/todos/1", 200);
   });
 });
 
-describe("DELETE /api", () => {
+describe("DELETE /api/todos/1", () => {
   it("ステータスコード200になるはず", () => {
-    request(app)
-      .delete("/api/todos")
-      .expect(200);
+    return testDelete("/api/todos/1", 200);
+  });
+});
+
+// 異常系のテスト
+describe("GET /api/abc", () => {
+  it("ステータスコード404になるはず", () => {
+    return testGet("/api/abc", 404);
+  });
+});
+
+describe("POST /api/abc", () => {
+  it("ステータスコード404になるはず", () => {
+    return testPost("/api/abc", 404);
+  });
+});
+
+describe("PUT /api/abc", () => {
+  it("ステータスコード404になるはず", () => {
+    return testPut("/api/abc", 404);
+  });
+});
+
+describe("DELETE /api/abc", () => {
+  it("ステータスコード404になるはず", () => {
+    return testDelete("/api/abc", 404);
   });
 });
