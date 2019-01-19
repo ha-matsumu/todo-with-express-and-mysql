@@ -26,15 +26,15 @@ function testDelete(_url, _statusCode) {
 }
 
 // 正常系のテスト
-describe("GET /api/todos/1", () => {
+describe("GET /api/todos", () => {
   it("ステータスコード200になるはず", () => {
-    return testGet("/api/todos/1", 200);
+    return testGet("/api/todos", 200);
   });
 });
 
-describe("POST /api/todos/1", () => {
+describe("POST /api/todos", () => {
   it("ステータスコード200になるはず", () => {
-    return testPost("/api/todos/1", 200);
+    return testPost("/api/todos", 200);
   });
 });
 
