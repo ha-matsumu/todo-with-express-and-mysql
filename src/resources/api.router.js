@@ -4,9 +4,10 @@ const apiController = require("./api.controller");
 
 // routing用（api/todos）のmiddlewareの作成
 // リクエスト（HTTPメソッド）、path、メソッド（callback関数）
-router.get("/todos", apiController.getTodos);
-router.post("/todos", apiController.postTodos);
-router.put("/todos", apiController.putTodos);
-router.delete("/todos", apiController.deleteTodos);
+router.route("/todos/:id")
+  .get(apiController.getTodos)
+  .post(apiController.postTodos)
+  .put(apiController.putTodos)
+  .delete(apiController.deleteTodos);
 
 module.exports = router;
