@@ -12,4 +12,4 @@ module.exports = {
   deleteTodos(req, res) {
     res.status(200).send("delete todo from DB");
   }
-}
+};
