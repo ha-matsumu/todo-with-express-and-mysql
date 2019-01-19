@@ -7,9 +7,13 @@ module.exports = {
     res.status(200).send("create todo to DB");
   },
   putTodos(req, res) {
-    res.status(200).send("update todo in DB");
+    const id = req.params.id;
+    const data = "update todo of id " + id + " in DB";
+    res.status(200).send(data);
   },
   deleteTodos(req, res) {
-    res.status(200).send("delete todo from DB");
+    const id = req.params.id;
+    const data = "delete todo of id " + id + " from DB";
+    res.status(200).send(data);
   }
 };
