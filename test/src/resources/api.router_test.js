@@ -74,3 +74,5 @@ describe("DELETE /api/abc", () => {
     return testDelete("/api/abc", 404);
   });
 });
+
+module.exports = testGet;
