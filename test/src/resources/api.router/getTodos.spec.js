@@ -1,9 +1,9 @@
 const assert = require("power-assert");
-const testGet = require("../api.router_test");
+const requestHelper = require("../requestHelper");
 
 describe("GET /api/todos", () => {
   it("API経由で取得したデータの確認", () => {
-    return testGet("/api/todos", 200)
+    return requestHelper.requestAPI("get", "/api/todos", 200)
       .set("Accept", "application/json")
       .then(response => {
         const todos = response.body;
