@@ -9,7 +9,7 @@ describe("GET /api/todos", () => {
 
 describe("POST /api/todos", () => {
   it("ステータスコード200になるはず", () => {
-    return requestHelper.requestAPI("post", "/api/todos", 200);
+    return requestHelper.requestAPI("post", "/api/todos?title='title1'&body='body1'", 200);
   });
 });
 
