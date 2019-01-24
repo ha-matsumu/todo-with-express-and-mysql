@@ -1,7 +1,12 @@
 const assert = require("power-assert");
 const requestHelper = require("../requestHelper");
+const todoFactory = require("../../factories/todo");
 
 describe("GET /api/todos", () => {
+  for (let i = 0; i < 5; i++) {
+    todoFactory();
+  }
+
   it("API経由で取得したデータの確認", () => {
     return requestHelper
       .requestAPI("get", "/api/todos", 200)
@@ -11,8 +16,12 @@ describe("GET /api/todos", () => {
 
         assert.equal(Array.isArray(todos), true, "配列ではありません。");
         todos.forEach((todo, index) => {
-          // DBの各カラムのデータの確認
-          assert.equal(todo.id, index + 1, "idが正しくありません。");
+          // DBの各カラムの型チェックの確認
+          assert.equal(
+            typeof todo.id,
+            "number",
+            "idは'number'型ではありません。"
+          );
           assert.equal(
             typeof todo.title,
             "string",
@@ -24,9 +33,9 @@ describe("GET /api/todos", () => {
             "bodyは'string'型ではありません。"
           );
           assert.equal(
-            todo.completed,
-            false,
-            "completedは'false'ではありません。"
+            typeof todo.completed,
+            "boolean",
+            "completedは'boolean'型ではありません。"
           );
           assert.equal(
             typeof todo.createdAt,
