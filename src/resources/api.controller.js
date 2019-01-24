@@ -36,6 +36,17 @@ module.exports = {
     }
   },
 
+  async getTodoById(req, res) {
+    const selectId = req.params.id;
+    try {
+      // select * from Todo order by id;
+      const todo = await index.Todo.findById(Number(selectId));
+      res.status(200).json(todo);
+    } catch (error) {
+      res.json(error);
+    }
+  },
+
   putTodos(req, res) {
     const id = req.params.id;
     const data = "update todo of id " + id + " in DB";
