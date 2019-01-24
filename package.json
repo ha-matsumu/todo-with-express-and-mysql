@@ -7,7 +7,7 @@
     "start": "nodemon src/index.js",
     "rollback": "env NODE_ENV=test node_modules/.bin/sequelize db:migrate:undo",
     "migrate": "env NODE_ENV=test node_modules/.bin/sequelize db:migrate",
-    "test": "npm run rollback && npm run migrate && env NODE_ENV=test mocha"
+    "test": "env NODE_ENV=test mocha"
   },
   "author": "",
   "license": "ISC",
