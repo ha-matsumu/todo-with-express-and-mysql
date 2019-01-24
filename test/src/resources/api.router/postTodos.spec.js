@@ -75,8 +75,16 @@ describe("GET /api/todos/1", () => {
       .set("Accept", "application/json")
       .then(response => {
         // DBの各カラムの値チェック
-        assert.equal(response.body.title, "titleA", "titleの値が正しくありません。");
-        assert.equal(response.body.body, "bodyA", "bodyの値が正しくありません。");
+        assert.equal(
+          response.body.title,
+          "titleA",
+          "titleの値が正しくありません。"
+        );
+        assert.equal(
+          response.body.body,
+          "bodyA",
+          "bodyの値が正しくありません。"
+        );
         assert.equal(
           response.body.completed,
           false,

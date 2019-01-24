@@ -5,12 +5,11 @@ const data = (props = {}) => {
   const defaultProps = {
     title: faker.name.title(),
     body: faker.lorem.sentence(),
-    completed: faker.random.boolean(),
+    completed: faker.random.boolean()
   };
   return Object.assign({}, defaultProps, props);
 };
 
-const createTodo = (props = {}) =>
-  index.Todo.create(data(props));
+const createTodo = (props = {}) => index.Todo.create(data(props));
 
 module.exports = createTodo;
