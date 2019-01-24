@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon src/index.js",
-    "test": "env NODE_ENV=test mocha"
+    "rollback": "env NODE_ENV=test node_modules/.bin/sequelize db:migrate:undo",
+    "migrate": "env NODE_ENV=test node_modules/.bin/sequelize db:migrate",
+    "test": "npm run rollback && npm run migrate && env NODE_ENV=test mocha"
   },
   "author": "",
   "license": "ISC",
@@ -18,6 +20,7 @@
     "sequelize-cli": "^5.4.0"
   },
   "devDependencies": {
+    "faker": "^4.1.0",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.9",
     "power-assert": "^1.6.1",
