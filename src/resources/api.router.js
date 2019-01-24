@@ -8,6 +8,7 @@ router.route("/todos")
   .get(apiController.getTodos)
   .post(apiController.postTodos);
 router.route("/todos/:id")
+  .get(apiController.getTodoById)
   .put(apiController.putTodos)
   .delete(apiController.deleteTodos);
 
