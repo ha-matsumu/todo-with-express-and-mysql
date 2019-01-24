@@ -1,7 +1,7 @@
 const faker = require("faker");
 const index = require("../../../src/models/index");
 
-const data = async (props = {}) => {
+const data = (props = {}) => {
   const defaultProps = {
     title: faker.name.title(),
     body: faker.lorem.sentence(),
@@ -10,7 +10,7 @@ const data = async (props = {}) => {
   return Object.assign({}, defaultProps, props);
 };
 
-const createTodo = async (props = {}) =>
-  index.Todo.create(await data(props));
+const createTodo = (props = {}) =>
+  index.Todo.create(data(props));
 
 module.exports = createTodo;
