@@ -4,14 +4,14 @@ const todoFactory = require("../../factories/todo");
 const truncate = require("../../truncate");
 
 describe("GET /api/todos", () => {
-  before(() => {
+  before(async () => {
     for (let i = 0; i < 5; i++) {
-      todoFactory();
+      await todoFactory();
     }
   });
 
-  after(() => {
-    truncate();
+  after(async () => {
+    await truncate();
   });
 
   it("API経由で取得したデータの確認", () => {
