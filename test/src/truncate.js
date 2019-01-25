@@ -6,7 +6,7 @@ const truncateTable = modelName =>
     force: true
   });
 
-const truncate = model => {
+const truncate = async (model) => {
   if (model) {
     return truncateTable(model);
   }
