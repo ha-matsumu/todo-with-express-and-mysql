@@ -4,7 +4,7 @@ const truncate = require("../../truncate");
 let id;
 
 describe("POST /api/todos", () => {
-  it("作成したデータの確認", () => {
+  it("作成したデータの確認(正常系)", () => {
     return requestHelper
       .requestAPI("post", "/api/todos", 200)
       .set("Accept", "application/json")
@@ -62,11 +62,27 @@ describe("POST /api/todos", () => {
         );
       });
   });
+
+  it("作成したデータの確認(異常系)", () => {
+    return (
+      requestHelper
+        .requestAPI("post", "/api/todos", 200)
+        .set("Accept", "application/json")
+        //.send({ title: "titleA"})
+        .then(response => {
+          assert.equal(
+            response.body.name,
+            "SequelizeDatabaseError",
+            "データの作成に成功しています。"
+          );
+        })
+    );
+  });
 });
 
 describe("GET /api/todos/1", () => {
-  after(() => {
-    truncate();
+  after(async () => {
+    await truncate();
   });
 
   it("作成したデータをDBから取得できるかの確認", () => {
