@@ -68,7 +68,6 @@ describe("POST /api/todos", () => {
       requestHelper
         .requestAPI("post", "/api/todos", 200)
         .set("Accept", "application/json")
-        //.send({ title: "titleA"})
         .then(response => {
           assert.equal(
             response.body.name,
