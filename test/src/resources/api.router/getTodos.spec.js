@@ -5,9 +5,11 @@ const truncate = require("../../truncate");
 
 describe("GET /api/todos", () => {
   before(async () => {
+    const promises = [];
     for (let i = 0; i < 5; i++) {
-      await todoFactory();
+      promises.push(todoFactory());
     }
+    await Promise.all(promises);
   });
 
   after(async () => {
