@@ -64,18 +64,16 @@ describe("POST /api/todos", () => {
   });
 
   it("作成したデータの確認(異常系)", () => {
-    return (
-      requestHelper
-        .requestAPI("post", "/api/todos", 200)
-        .set("Accept", "application/json")
-        .then(response => {
-          assert.equal(
-            response.body.name,
-            "SequelizeDatabaseError",
-            "データの作成に成功しています。"
-          );
-        })
-    );
+    return requestHelper
+      .requestAPI("post", "/api/todos", 200)
+      .set("Accept", "application/json")
+      .then(response => {
+        assert.equal(
+          response.body.name,
+          "SequelizeDatabaseError",
+          "データの作成に成功しています。"
+        );
+      });
   });
 });
 
