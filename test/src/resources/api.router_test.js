@@ -1,18 +1,6 @@
 const requestHelper = require("./requestHelper");
 
 // 正常系のテスト
-describe("GET /api/todos", () => {
-  it("ステータスコード200になるはず", () => {
-    return requestHelper.requestAPI("get", "/api/todos", 200);
-  });
-});
-
-describe("POST /api/todos", () => {
-  it("ステータスコード200になるはず", () => {
-    return requestHelper.requestAPI("post", "/api/todos", 200);
-  });
-});
-
 describe("PUT /api/todos/1", () => {
   it("ステータスコード200になるはず", () => {
     return requestHelper.requestAPI("put", "/api/todos/1", 200);
