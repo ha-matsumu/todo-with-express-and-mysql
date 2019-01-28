@@ -47,17 +47,10 @@ describe("PUT /api/todos/:id", () => {
       .requestAPI("put", "/api/todos/1", 404)
       .set("Accept", "application/json")
       .then(response => {
-        assert.equal(
-          response.body.message,
-          "Not Found",
-          "エラーメッセージが予期したものと違います。"
-        );
-
-        assert.equal(
-          response.body.code,
-          "404",
-          "ステータスコードが予期したものと違います。"
-        );
+        assert.deepEqual(JSON.parse(response.body), {
+          message: "Not Found",
+          code: "404"
+        });
       });
   });
 });
