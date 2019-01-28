@@ -1,7 +1,7 @@
 const assert = require("power-assert");
 const requestHelper = require("../requestHelper");
 const truncate = require("../../truncate");
-let id;
+let createdTodoid;
 
 describe("POST /api/todos", () => {
   it("作成したデータの確認(正常系)", () => {
@@ -43,8 +43,7 @@ describe("POST /api/todos", () => {
         );
 
         // 値チェック
-        id = response.body.id;
-        assert.equal(response.body.id, id, "idの値が正しくありません。");
+        createdTodoid = response.body.id;
         assert.equal(
           response.body.title,
           "titleA",
@@ -84,25 +83,18 @@ describe("GET /api/todos/1", () => {
 
   it("作成したデータをDBから取得できるかの確認", () => {
     return requestHelper
-      .requestAPI("get", "/api/todos/" + id, 200)
+      .requestAPI("get", "/api/todos/" + createdTodoid, 200)
       .set("Accept", "application/json")
       .then(response => {
         // DBの各カラムの値チェック
-        assert.equal(
-          response.body.title,
-          "titleA",
-          "titleの値が正しくありません。"
-        );
-        assert.equal(
-          response.body.body,
-          "bodyA",
-          "bodyの値が正しくありません。"
-        );
-        assert.equal(
-          response.body.completed,
-          false,
-          "completedの値が正しくありません。"
-        );
+        assert.deepEqual(response.body, {
+          id: createdTodoid,
+          title: 'titleA',
+          body: 'bodyA',
+          completed: false,
+          createdAt: response.body.createdAt,
+          updatedAt: response.body.updatedAt
+        });
       });
   });
 });
