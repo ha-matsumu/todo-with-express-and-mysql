@@ -37,10 +37,10 @@ module.exports = {
   },
 
   async getTodoById(req, res) {
-    const selectId = req.params.id;
+    const targetTodoId = req.params.id;
     try {
       // select * from Todo order by id;
-      const todo = await index.Todo.findById(Number(selectId));
+      const todo = await index.Todo.findById(Number(targetTodoId));
       res.status(200).json(todo);
     } catch (error) {
       res.json(error);
@@ -48,13 +48,21 @@ module.exports = {
   },
 
   async putTodos(req, res) {
-    const selectId = req.params.id;
+    const targetTodoId = req.params.id;
     let transaction;
     try {
       transaction = await index.sequelize.transaction();
 
       //update todos set title = "titleA", body = "bodyA", completed = true where id = selectID;
-      const todo = await index.Todo.findById(Number(selectId), { transaction });
+      const todo = await index.Todo.findById(Number(targetTodoId), { transaction });
+
+      if(!todo){
+        res.status(404).json({
+          message: "Not Found",
+          code: "404"
+        });
+      }
+
       todo.update({
         title: req.body.title,
         body: req.body.body,
