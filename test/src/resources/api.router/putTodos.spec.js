@@ -2,19 +2,25 @@ const assert = require("power-assert");
 const requestHelper = require("../requestHelper");
 const todoFactory = require("../../factories/todo");
 const truncate = require("../../truncate");
+const Todo = require("../../../../src/models/index").Todo;
 
-describe("PUT /api/todos/7", () => {
+let targetTodo;
+let url;
+describe("PUT /api/todos/:id", () => {
   before(async () => {
     const promises = [];
     for (let i = 0; i < 5; i++) {
       promises.push(todoFactory());
     }
     await Promise.all(promises);
+
+    targetTodo = await Todo.findOne();
+    url = `/api/todos/${targetTodo.id}`;
   });
 
   it("更新したデータの確認（正常系）", () => {
     return requestHelper
-      .requestAPI("put", "/api/todos/7", 200)
+      .requestAPI("put", url, 200)
       .set("Accept", "application/json")
       .send({ title: "titleA", body: "bodyA", completed: true })
       .then(response => {
@@ -37,49 +43,50 @@ describe("PUT /api/todos/7", () => {
   });
 
   it("更新したデータの確認（異常系）", () => {
-    return (
-      requestHelper
-        .requestAPI("put", "/api/todos/7", 200)
-        .set("Accept", "application/json")
-        // .send({ date: 2019-01-28 })
-        .then(response => {
-          console.log(response.body);
+    return requestHelper
+      .requestAPI("put", "/api/todos/1", 404)
+      .set("Accept", "application/json")
+      .then(response => {
+        assert.equal(
+          response.body.message,
+          "Not Found",
+          "エラーメッセージが予期したものと違います。"
+        );
 
-          // assert.equal(
-          //   response.body.name,
-          //   "SequelizeDatabaseError",
-          //   "データの作成に成功しています。"
-          // );
-        })
-    );
+        assert.equal(
+          response.body.code,
+          "404",
+          "ステータスコードが予期したものと違います。"
+        );
+      });
   });
 });
 
-describe("GET /api/todos/1", () => {
+describe("GET /api/todos/:id", () => {
   after(async () => {
     await truncate();
   });
 
   it("更新したデータをDBから取得できるかの確認", () => {
     return requestHelper
-      .requestAPI("get", "/api/todos/7", 200)
+      .requestAPI("get", url, 200)
       .set("Accept", "application/json")
       .then(response => {
         // DBの各カラムの値チェック
         assert.equal(
           response.body.title,
           "titleA",
-          "titleの値が正しくありません。"
+          "titleの値が更新されていません。"
         );
         assert.equal(
           response.body.body,
           "bodyA",
-          "bodyの値が正しくありません。"
+          "bodyの値が更新されていません。"
         );
         assert.equal(
           response.body.completed,
           true,
-          "completedの値が正しくありません。"
+          "completedの値が更新されていません。"
         );
       });
   });
