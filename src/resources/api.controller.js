@@ -1,10 +1,5 @@
 const index = require("../models/index");
 
-function throwErrorMessage() {
-  this.message = "Not found";
-  this.code = "404";
-}
-
 module.exports = {
   // 各リクエストに対して実行されるメソッドを定義
   async getTodos(req, res) {
@@ -47,16 +42,13 @@ module.exports = {
       // select * from Todo order by id;
       const todo = await index.Todo.findById(Number(targetTodoId));
 
-      // if(!todo){
-      //   res.status(404).json({
-      //     message: "Not Found",
-      //     code: "404"
-      //   });
-      // }
+      if(!todo){
+        throw new Error('{"message": "Not Found", "code": "404"}');
+      }
 
       res.status(200).json(todo);
     } catch (error) {
-      res.json(error);
+      res.status(404).json(error.message);
     }
   },
 
