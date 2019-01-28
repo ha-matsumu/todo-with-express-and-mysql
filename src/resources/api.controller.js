@@ -42,7 +42,7 @@ module.exports = {
       // select * from Todo order by id;
       const todo = await index.Todo.findById(Number(targetTodoId));
 
-      if(!todo){
+      if (!todo) {
         throw new Error('{"message": "Not Found", "code": "404"}');
       }
 
