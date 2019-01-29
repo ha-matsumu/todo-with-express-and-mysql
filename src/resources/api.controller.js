@@ -58,6 +58,7 @@ module.exports = {
   async putTodos(req, res) {
     const targetTodoId = req.params.id;
     let transaction;
+    const error = new Error();
     try {
       transaction = await index.sequelize.transaction();
 
@@ -67,10 +68,9 @@ module.exports = {
       });
 
       if (!todo) {
-        throw {
-          message: "Not Found",
-          code: "404"
-        };
+        error.message = "Not Found";
+        error.code = "404";
+        throw error;
       }
 
       todo.update({
