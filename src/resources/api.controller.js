@@ -43,7 +43,10 @@ module.exports = {
       const todo = await index.Todo.findById(Number(targetTodoId));
 
       if (!todo) {
-        throw new Error('{"message": "Not Found", "code": "404"}');
+        throw new Error({
+          message: "Not Found",
+          code: "404"
+        });
       }
 
       res.status(200).json(todo);
@@ -64,7 +67,10 @@ module.exports = {
       });
 
       if (!todo) {
-        throw new Error('{"message": "Not Found", "code": "404"}');
+        throw {
+          message: "Not Found",
+          code: "404"
+        };
       }
 
       todo.update({
@@ -77,7 +83,7 @@ module.exports = {
       res.status(200).json(todo);
     } catch (error) {
       await transaction.rollback();
-      res.status(404).json(error.message);
+      res.status(404).json(error);
     }
   },
   deleteTodos(req, res) {
