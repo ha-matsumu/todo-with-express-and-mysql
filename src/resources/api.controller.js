@@ -43,22 +43,21 @@ module.exports = {
       const todo = await index.Todo.findById(Number(targetTodoId));
 
       if (!todo) {
-        throw new Error({
-          message: "Not Found",
-          code: "404"
-        });
+        const error = new Error();
+        error.message = "Not Found";
+        error.code = "404";
+        throw error;
       }
 
       res.status(200).json(todo);
     } catch (error) {
-      res.status(404).json(error.message);
+      res.status(404).json(error);
     }
   },
 
   async putTodos(req, res) {
     const targetTodoId = req.params.id;
     let transaction;
-    const error = new Error();
     try {
       transaction = await index.sequelize.transaction();
 
@@ -68,6 +67,7 @@ module.exports = {
       });
 
       if (!todo) {
+        const error = new Error();
         error.message = "Not Found";
         error.code = "404";
         throw error;
