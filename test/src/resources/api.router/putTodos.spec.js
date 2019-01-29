@@ -60,7 +60,7 @@ describe("GET /api/todos/:id", () => {
     await truncate();
   });
 
-  it("更新したデータをDBから取得できるかの確認", () => {
+  it("更新したデータをDBから取得できるかの確認（正常系）", () => {
     return requestHelper
       .requestAPI("get", url, 200)
       .set("Accept", "application/json")
@@ -73,6 +73,18 @@ describe("GET /api/todos/:id", () => {
           completed: true,
           createdAt: response.body.createdAt,
           updatedAt: response.body.updatedAt
+        });
+      });
+  });
+
+  it("更新したデータをDBから取得できるかの確認（異常系）", () => {
+    return requestHelper
+      .requestAPI("get", "/api/todos/1", 404)
+      .set("Accept", "application/json")
+      .then(response => {
+        assert.deepEqual(response.body, {
+          message: "Not Found",
+          code: "404"
         });
       });
   });
