@@ -89,8 +89,8 @@ describe("GET /api/todos/1", () => {
         // DBの各カラムの値チェック
         assert.deepEqual(response.body, {
           id: createdTodoid,
-          title: 'titleA',
-          body: 'bodyA',
+          title: "titleA",
+          body: "bodyA",
           completed: false,
           createdAt: response.body.createdAt,
           updatedAt: response.body.updatedAt
