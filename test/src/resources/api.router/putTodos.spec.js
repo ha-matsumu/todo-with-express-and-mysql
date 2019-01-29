@@ -47,7 +47,7 @@ describe("PUT /api/todos/:id", () => {
       .requestAPI("put", "/api/todos/1", 404)
       .set("Accept", "application/json")
       .then(response => {
-        assert.deepEqual(JSON.parse(response.body), {
+        assert.deepEqual(response.body, {
           message: "Not Found",
           code: "404"
         });
@@ -66,21 +66,14 @@ describe("GET /api/todos/:id", () => {
       .set("Accept", "application/json")
       .then(response => {
         // DBの各カラムの値チェック
-        assert.equal(
-          response.body.title,
-          "titleA",
-          "titleの値が更新されていません。"
-        );
-        assert.equal(
-          response.body.body,
-          "bodyA",
-          "bodyの値が更新されていません。"
-        );
-        assert.equal(
-          response.body.completed,
-          true,
-          "completedの値が更新されていません。"
-        );
+        assert.deepEqual(response.body, {
+          id: targetTodo.id,
+          title: 'titleA',
+          body: 'bodyA',
+          completed: true,
+          createdAt: response.body.createdAt,
+          updatedAt: response.body.updatedAt
+        });
       });
   });
 });
