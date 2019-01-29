@@ -61,7 +61,7 @@ module.exports = {
     try {
       transaction = await index.sequelize.transaction();
 
-      //update todos set title = "titleA", body = "bodyA", completed = true where id = selectID;
+      //update todos set title = "titleA", body = "bodyA", completed = true where id = targetTodoId;
       const todo = await index.Todo.findById(Number(targetTodoId), {
         transaction
       });
@@ -86,9 +86,32 @@ module.exports = {
       res.status(404).json(error);
     }
   },
-  deleteTodos(req, res) {
-    const id = req.params.id;
-    const data = "delete todo of id " + id + " from DB";
-    res.status(200).send(data);
+
+  async deleteTodos(req, res) {
+    const targetTodoId = req.params.id;
+    let transaction;
+    try {
+      transaction = await index.sequelize.transaction();
+
+      //delete from todos where id = targetTodoId;
+      const todo = await index.Todo.findById(Number(targetTodoId), {
+        transaction
+      });
+
+      if (!todo) {
+        const error = new Error();
+        error.message = "Not Found";
+        error.code = "404";
+        throw error;
+      }
+
+      todo.destroy();
+
+      await transaction.commit();
+      res.status(200).json(todo);
+    } catch (error) {
+      await transaction.rollback();
+      res.status(404).json(error);
+    }
   }
 };
