@@ -44,7 +44,7 @@ describe("PUT /api/todos/:id", () => {
 
   it("更新したデータの確認（異常系）", () => {
     return requestHelper
-      .requestAPI("put", "/api/todos/abc", 404)
+      .requestAPI("put", "/api/todos/1", 404)
       .set("Accept", "application/json")
       .then(response => {
         assert.deepEqual(response.body, {
@@ -79,7 +79,7 @@ describe("GET /api/todos/:id", () => {
 
   it("更新したデータをDBから取得できるかの確認（異常系）", () => {
     return requestHelper
-      .requestAPI("get", "/api/todos/abc", 404)
+      .requestAPI("get", "/api/todos/1", 404)
       .set("Accept", "application/json")
       .then(response => {
         assert.deepEqual(response.body, {
