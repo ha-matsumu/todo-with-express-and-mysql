@@ -23,7 +23,7 @@ describe("DELETE /api/todos/:id", () => {
   });
 
   it("DB内のデータを削除する（異常系）=> ステータスコードは404になるはず", () => {
-    return requestHelper.requestAPI("delete", "/api/todos/abc", 404);
+    return requestHelper.requestAPI("delete", "/api/todos/1", 404);
   });
 });
 
