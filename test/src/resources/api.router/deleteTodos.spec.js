@@ -18,12 +18,19 @@ describe("DELETE /api/todos/:id", () => {
     url = `/api/todos/${targetTodo.id}`;
   });
 
-  it("DB内のデータを削除する（正常系）=> ステータスコードは200になるはず", () => {
+  it("DB内のデータを削除する（正常系）", () => {
     return requestHelper.requestAPI("delete", url, 200);
   });
 
-  it("DB内のデータを削除する（異常系）=> ステータスコードは404になるはず", () => {
-    return requestHelper.requestAPI("delete", "/api/todos/1", 404);
+  it("DB内のデータを削除する（異常系）", () => {
+    return requestHelper
+      .requestAPI("delete", "/api/todos/1", 404)
+      .then(response => {
+        assert.deepEqual(response.body, {
+          message: "Not Found",
+          code: "404"
+        });
+      });
   });
 });
 
