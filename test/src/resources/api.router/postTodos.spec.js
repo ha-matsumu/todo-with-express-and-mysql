@@ -43,7 +43,7 @@ describe("POST /api/todos", () => {
         );
 
         // 値チェック
-        createdTodoid = response.body.id;
+        createdTodoId = response.body.id;
         assert.equal(
           response.body.title,
           "titleA",
@@ -67,29 +67,27 @@ describe("POST /api/todos", () => {
       .requestAPI("post", "/api/todos", 500)
       .set("Accept", "application/json")
       .then(response => {
-        console.log(response.body);
-        assert.equal(
-          response.body,
-          "Server Error",
-          "データの作成に成功しています。"
-        );
+        assert.deepEqual(response.body, {
+          message: "Server Error",
+          code: 500
+        });
       });
   });
 });
 
-describe("GET /api/todos/1", () => {
+describe("GET /api/todos/:id", () => {
   after(async () => {
     await truncate();
   });
 
   it("作成したデータをDBから取得できるかの確認", () => {
     return requestHelper
-      .requestAPI("get", "/api/todos/" + createdTodoid, 200)
+      .requestAPI("get", "/api/todos/" + createdTodoId, 200)
       .set("Accept", "application/json")
       .then(response => {
         // DBの各カラムの値チェック
         assert.deepEqual(response.body, {
-          id: createdTodoid,
+          id: createdTodoId,
           title: "titleA",
           body: "bodyA",
           completed: false,
