@@ -87,9 +87,9 @@ module.exports = {
 
   async putTodo(req, res) {
     const targetTodoId = req.params.id;
-    //let transaction;
+    let transaction;
     try {
-      let transaction = await index.sequelize.transaction();
+      transaction = await index.sequelize.transaction();
 
       //update todos set title = "titleA", body = "bodyA", completed = true where id = targetTodoId;
       const todo = await index.Todo.findById(Number(targetTodoId), {
