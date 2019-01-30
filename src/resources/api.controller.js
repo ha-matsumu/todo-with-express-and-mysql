@@ -1,5 +1,16 @@
 const index = require("../models/index");
 
+const throwClientError = () => {
+  const error = new Error();
+  error.message = "Not Found";
+  error.code = 404;
+  throw error;
+};
+const serverError = {
+  message: "Server Error",
+  code: 500
+};
+
 module.exports = {
   // 各リクエストに対して実行されるメソッドを定義
   async getTodos(req, res) {
@@ -8,13 +19,22 @@ module.exports = {
       const todos = await index.Todo.findAll({
         order: [["id", "ASC"]]
       });
+
+      if (!todos) {
+        throwClientError();
+      }
+
       res.status(200).json(todos);
     } catch (error) {
-      res.json(error);
+      if (error.code === 404) {
+        res.status(error.code).json(error);
+      } else {
+        res.status(serverError.code).json(serverError.message);
+      }
     }
   },
 
-  async postTodos(req, res) {
+  async postTodo(req, res) {
     let transaction;
     try {
       transaction = await index.sequelize.transaction();
@@ -26,13 +46,22 @@ module.exports = {
           body: req.body.body,
           completed: req.body.completed
         },
-        { transaction }
+        transaction
       );
+
+      if (!todo) {
+        throwClientError();
+      }
+
       await transaction.commit();
       res.status(200).json(todo);
     } catch (error) {
       await transaction.rollback();
-      res.json(error);
+      if (error.code === 404) {
+        res.status(error.code).json(error);
+      } else {
+        res.status(serverError.code).json(serverError.message);
+      }
     }
   },
 
@@ -43,23 +72,24 @@ module.exports = {
       const todo = await index.Todo.findById(Number(targetTodoId));
 
       if (!todo) {
-        const error = new Error();
-        error.message = "Not Found";
-        error.code = "404";
-        throw error;
+        throwClientError();
       }
 
       res.status(200).json(todo);
     } catch (error) {
-      res.status(404).json(error);
+      if (error.code === 404) {
+        res.status(error.code).json(error);
+      } else {
+        res.status(serverError.code).json(serverError.message);
+      }
     }
   },
 
-  async putTodos(req, res) {
+  async putTodo(req, res) {
     const targetTodoId = req.params.id;
-    let transaction;
+    //let transaction;
     try {
-      transaction = await index.sequelize.transaction();
+      let transaction = await index.sequelize.transaction();
 
       //update todos set title = "titleA", body = "bodyA", completed = true where id = targetTodoId;
       const todo = await index.Todo.findById(Number(targetTodoId), {
@@ -67,27 +97,31 @@ module.exports = {
       });
 
       if (!todo) {
-        const error = new Error();
-        error.message = "Not Found";
-        error.code = "404";
-        throw error;
+        throwClientError();
       }
 
-      todo.update({
-        title: req.body.title,
-        body: req.body.body,
-        completed: req.body.completed
-      });
+      todo.update(
+        {
+          title: req.body.title,
+          body: req.body.body,
+          completed: req.body.completed
+        },
+        transaction
+      );
 
       await transaction.commit();
       res.status(200).json(todo);
     } catch (error) {
       await transaction.rollback();
-      res.status(404).json(error);
+      if (error.code === 404) {
+        res.status(error.code).json(error);
+      } else {
+        res.status(serverError.code).json(serverError.message);
+      }
     }
   },
 
-  async deleteTodos(req, res) {
+  async deleteTodo(req, res) {
     const targetTodoId = req.params.id;
     let transaction;
     try {
@@ -99,19 +133,20 @@ module.exports = {
       });
 
       if (!todo) {
-        const error = new Error();
-        error.message = "Not Found";
-        error.code = "404";
-        throw error;
+        throwClientError();
       }
 
-      todo.destroy();
+      todo.destroy(transaction);
 
       await transaction.commit();
       res.status(200).json(todo);
     } catch (error) {
       await transaction.rollback();
-      res.status(404).json(error);
+      if (error.code === 404) {
+        res.status(error.code).json(error);
+      } else {
+        res.status(serverError.code).json(serverError.message);
+      }
     }
   }
 };
