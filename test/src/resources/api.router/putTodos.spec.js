@@ -49,7 +49,7 @@ describe("PUT /api/todos/:id", () => {
       .then(response => {
         assert.deepEqual(response.body, {
           message: "Not Found",
-          code: "404"
+          code: 404
         });
       });
   });

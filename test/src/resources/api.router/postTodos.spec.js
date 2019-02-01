@@ -43,7 +43,7 @@ describe("POST /api/todos", () => {
         );
 
         // 値チェック
-        createdTodoid = response.body.id;
+        createdTodoId = response.body.id;
         assert.equal(
           response.body.title,
           "titleA",
@@ -64,33 +64,32 @@ describe("POST /api/todos", () => {
 
   it("作成したデータの確認(異常系)", () => {
     return requestHelper
-      .requestAPI("post", "/api/todos", 200)
+      .requestAPI("post", "/api/todos", 500)
       .set("Accept", "application/json")
       .then(response => {
-        assert.equal(
-          response.body.name,
-          "SequelizeDatabaseError",
-          "データの作成に成功しています。"
-        );
+        assert.deepEqual(response.body, {
+          message: "Server Error",
+          code: 500
+        });
       });
   });
 });
 
-describe("GET /api/todos/1", () => {
+describe("GET /api/todos/:id", () => {
   after(async () => {
     await truncate();
   });
 
   it("作成したデータをDBから取得できるかの確認", () => {
     return requestHelper
-      .requestAPI("get", "/api/todos/" + createdTodoid, 200)
+      .requestAPI("get", "/api/todos/" + createdTodoId, 200)
       .set("Accept", "application/json")
       .then(response => {
         // DBの各カラムの値チェック
         assert.deepEqual(response.body, {
-          id: createdTodoid,
-          title: 'titleA',
-          body: 'bodyA',
+          id: createdTodoId,
+          title: "titleA",
+          body: "bodyA",
           completed: false,
           createdAt: response.body.createdAt,
           updatedAt: response.body.updatedAt
