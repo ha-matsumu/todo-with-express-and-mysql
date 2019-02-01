@@ -29,7 +29,7 @@ module.exports = {
   },
 
   async postTodo(req, res) {
-    let transaction = await index.sequelize.transaction();
+    const transaction = await index.sequelize.transaction();
     try {
       // inset into Todo(title, body) values(value1, value2);
       const todo = await index.Todo.create(
@@ -106,7 +106,7 @@ module.exports = {
 
   async deleteTodo(req, res) {
     const targetTodoId = req.params.id;
-    let transaction = await index.sequelize.transaction();
+    const transaction = await index.sequelize.transaction();
     try {
       //delete from todos where id = targetTodoId;
       const todo = await index.Todo.findById(Number(targetTodoId), {
