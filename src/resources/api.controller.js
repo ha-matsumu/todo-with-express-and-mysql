@@ -85,16 +85,18 @@ module.exports = {
         throwError("Not Found", 404);
       }
 
-      await todo.update(
-        {
-          title: req.body.title,
-          body: req.body.body,
-          completed: req.body.completed
-        },
-        { transaction }
-      ).catch(error => {
-        throwError("Server Error", 500);
-      });
+      await todo
+        .update(
+          {
+            title: req.body.title,
+            body: req.body.body,
+            completed: req.body.completed
+          },
+          { transaction }
+        )
+        .catch(error => {
+          throwError("Server Error", 500);
+        });
 
       await transaction.commit();
       res.status(200).json(todo);
