@@ -1,4 +1,4 @@
-const models = require("../../src/models/");
+const models = require("../../../src/server/models/");
 
 const truncateTable = modelName =>
   models[modelName].destroy({
