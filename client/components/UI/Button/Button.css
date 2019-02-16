@@ -1,0 +1,59 @@
+.Button {
+  margin: 20px 5px;
+  display: inline-block;
+  width: 200px;
+  text-align: center;
+  font-size: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 24px;
+  border-radius: 4px;
+  position: relative;
+}
+
+.Button span {
+  position: relative;
+  z-index: 1;
+}
+
+.Button::before,
+.Button::after {
+  content: "";
+  display: block;
+  background-color: #fff;
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  transition: 0.2s;
+}
+.Button::before {
+  left: 0;
+}
+.Button::after {
+  right: 0;
+}
+
+.Button:hover:before,
+.Button:hover:after {
+  width: 0;
+  background-color: #fff;
+}
+
+.Button:hover {
+  color: #fff;
+}
+
+.Add {
+  background-color: #4E342E;
+  border: 5px solid #4E342E;
+  color: #4E342E;
+}
+
+.Delete {
+  background-color: red;
+  border: 5px solid red;
+  color: red;
+}
+
+
