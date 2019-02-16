@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon src/server/index.js  --exec babel-node",
+    "server": "nodemon src/index.js  --exec babel-node",
     "client": "webpack-dev-server --config ./config/webpack.config.dev.js",
     "build": "webpack --config ./config/webpack.config.js --mode production",
     "dev": "NODE_ENV=development concurrently \"npm run client\" \"npm run server\"",
     "start": "NODE_ENV=production npm run build && npm run server",
-    "rollback": "env NODE_ENV=test node_modules/.bin/sequelize db:migrate:undo",
-    "migrate": "env NODE_ENV=test node_modules/.bin/sequelize db:migrate",
+    "rollback": "node_modules/.bin/sequelize db:migrate:undo",
+    "migrate": "node_modules/.bin/sequelize db:migrate",
+    "seed": "node_modules/.bin/sequelize db:seed:all",
     "test": "env NODE_ENV=test mocha"
   },
   "author": "",
