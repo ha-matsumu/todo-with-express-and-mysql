@@ -3,8 +3,8 @@ import axios from "axios";
 
 import Aux from "../../hoc/Aux";
 import GetTodos from "../../components/GetTodos/GetTodos";
-import Modal from "../../components/UI/Modal/Modal";
 import Button from "../../components/UI/Button/Button";
+import InputField from "../../components/InputField/InputField";
 
 import "./Todos.css";
 import "../../components/UI/Button/Button.css";
@@ -16,6 +16,7 @@ class Todos extends Component {
     title: "",
     body: "",
     completed: "",
+    // selectedTodo: {},
     error: false,
     purchaising: false,
     add: true
@@ -39,59 +40,16 @@ class Todos extends Component {
     this.setState({ purchaising: true });
   };
 
-  purchaseCancelHandler = () => {
-    this.setState({
-      id: null,
-      title: "",
-      body: "",
-      completed: "",
-      purchaising: false,
-      add: true
-    });
-  };
-
-  // Todoの追加処理
-  postTodoHandler = () => {
-    const defaultData = {
-      title: this.state.title,
-      body: this.state.body
-    };
-
-    axios.post("/api/todos", defaultData);
-
-    this.setState({ title: "", body: "" });
-    this.purchaseCancelHandler();
-  };
-
   // Todoが選択された時の処理
   selectedTodoHandler = id => {
     this.setState({ add: false });
     this.purchaisingHandler();
     this.setState({
       id: id,
-      title: this.state.todos[id-1].title,
-      // title: this.state.todos.forEach(todo => {
-      //   if (todo.id === id) {
-      //     return todo.title;
-      //   }
-      // }),
+      title: this.state.todos[id - 1].title,
       body: this.state.todos[id - 1].body,
       completed: this.state.todos[id - 1].completed
     });
-  };
-
-  // Todoの更新処理
-  putTodoHandler = () => {
-    const defaultData = {
-      title: this.state.title,
-      body: this.state.body,
-      completed: this.state.completed
-    };
-
-    axios.put("/api/todos/" + this.state.id, defaultData);
-
-    this.setState({ id: null, title: "", body: "", completed: "" });
-    this.purchaseCancelHandler();
   };
 
   deleteTodoHandler = () => {
@@ -119,63 +77,15 @@ class Todos extends Component {
 
     return (
       <Aux>
-        <Modal
-          show={this.state.purchaising}
-          modalClosed={this.purchaseCancelHandler}
-        >
-          <div className="FormTodo">
-            <button className="button" onClick={this.purchaseCancelHandler}>
-              ×
-            </button>
-            <h1>{this.state.add ? "ADD TODO" : "CHANGE TODO"}</h1>
-            <label>
-              Title
-              <input
-                type="text"
-                value={this.state.title}
-                onChange={event => this.setState({ title: event.target.value })}
-              />
-            </label>
-            <label>
-              Body
-              <textarea
-                rows="4"
-                value={this.state.body}
-                onChange={event => this.setState({ body: event.target.value })}
-              />
-            </label>
-            {this.state.add ? null : (
-              <Aux>
-                <label>Completed</label>
-                <select
-                  value={this.state.completed}
-                  onChange={event =>
-                    this.setState({ completed: event.target.value })
-                  }
-                >
-                  <option value="true">TRUE</option>
-                  <option value="false">FALSE</option>
-                </select>
-              </Aux>
-            )}
-            {this.state.add ? null : (
-              <Button btnType="Delete" clicked={this.deleteTodoHandler}>
-                DELETE
-              </Button>
-            )}
-            <Button
-              btnType="Add"
-              clicked={
-                this.state.add ? this.postTodoHandler : this.putTodoHandler
-              }
-            >
-              {this.state.add ? "ADD" : "CHANGE"}
-            </Button>
-          </div>
-        </Modal>
-
+        <InputField
+          purchaising={this.state.purchaising}
+          add={this.state.add}
+          id={this.state.id}
+          title={this.state.title}
+          body={this.state.body}
+          completed={this.state.completed}
+        />
         <section className="Todos">{todos}</section>
-
         <div className="BuildControl">
           <Button btnType="Add" clicked={this.purchaisingHandler}>
             +

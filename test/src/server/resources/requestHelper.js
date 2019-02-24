@@ -1,5 +1,5 @@
 const request = require("supertest");
-const app = require("../../../../src/server/server");
+const app = require("../../../../src/server");
 
 module.exports = {
   requestAPI: (_method, _url, _statusCode) => {

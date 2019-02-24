@@ -1,5 +1,5 @@
 const faker = require("faker");
-const index = require("../../../../src/server/models/index");
+const index = require("../../../../src/models/index");
 
 const data = (props = {}) => {
   const defaultProps = {

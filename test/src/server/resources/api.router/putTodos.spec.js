@@ -2,7 +2,7 @@ const assert = require("power-assert");
 const requestHelper = require("../requestHelper");
 const todoFactory = require("../../factories/todo");
 const truncate = require("../../truncate");
-const Todo = require("../../../../../src/server/models/index").Todo;
+const Todo = require("../../../../../src/models/index").Todo;
 
 let targetTodo;
 let url;
