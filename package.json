@@ -24,6 +24,8 @@
     "mysql2": "^1.6.4",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
+    "react-redux": "^6.0.1",
+    "redux": "^4.0.1",
     "sequelize": "^4.42.0",
     "sequelize-cli": "^5.4.0"
   },
