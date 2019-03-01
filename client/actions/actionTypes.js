@@ -1,0 +1,9 @@
+// Actionの種類
+export const FETCH_TODOS_START = "FETCH_TODOS_START";
+export const FETCH_TODOS_SUCCESS = "FETCH_TODOS_SUCCESS";
+export const FETCH_TODOS_FAIL = "FETCH_TODOS_FAIL";
+
+export const POST_TODO_START = "POST_TODO_START";
+export const POST_TODO_SUCCESS = "POST_TODO_SUCCESS";
+export const POST_TODO_FAIL = "POST_TODO_FAIL";
+export const POST_INIT = "POST_INIT";
