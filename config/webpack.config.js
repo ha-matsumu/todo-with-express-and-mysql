@@ -1,15 +1,15 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const path = require('path')
+const path = require("path");
 
 const htmlWebpackPlugin = new HtmlWebPackPlugin({
   template: "./public/index.html",
   filename: "./index.html"
 });
- module.exports = {
+module.exports = {
   entry: "./client/index.js",
   output: {
-    path: path.resolve('dist'),
-    filename: '[name].js'
+    path: path.resolve("dist"),
+    filename: "[name].js"
   },
   module: {
     rules: [
@@ -27,4 +27,4 @@ const htmlWebpackPlugin = new HtmlWebPackPlugin({
     ]
   },
   plugins: [htmlWebpackPlugin]
-}; 
+};
