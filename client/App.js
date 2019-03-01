@@ -1,16 +1,22 @@
 import React, { Component } from "react";
 
 class App extends Component {
-  render() {
+  componentDidMount() {
     fetch("/api/todos")
       .then(response => {
         return response.json();
       })
-      .then(todo => {
-        console.log(todo);
+      .then(todos => {
+        console.log(todos);
       });
+  }
 
-    return <div>Hello TODO APP!!</div>;
+  render() {
+    return (
+      <div>
+        <h1>Hello TODO APP!!</h1>
+      </div>
+    );
   }
 }
 
