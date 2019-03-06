@@ -28,7 +28,7 @@ describe("FETCH_TODOS", () => {
   it("FETCH_TODOS_SUCCESSが処理されるはず", () => {
     expect(
       reducer(
-        { todos: [], loading: false },
+        { todos: [], loading: false, error: false },
         {
           type: actionTypes.FETCH_TODOS_SUCCESS,
           todos: todos
@@ -36,7 +36,8 @@ describe("FETCH_TODOS", () => {
       )
     ).toEqual({
       todos: todos,
-      loading: false
+      loading: false,
+      error: false
     });
   });
 
@@ -46,11 +47,13 @@ describe("FETCH_TODOS", () => {
         { loading: true },
         {
           type: actionTypes.FETCH_TODOS_FAIL,
-          loading: false
+          loading: false,
+          error: true
         }
       )
     ).toEqual({
-      loading: false
+      loading: false,
+      error: true
     });
   });
 });
