@@ -1,4 +1,4 @@
-.Todo {
+.todo {
   width: 250px;
   padding: 16px;
   text-align: center;
@@ -9,7 +9,7 @@
   background-color: #ffb300;
 }
 
-.Todo:hover,
-.Todo:active {
+.todo:hover,
+.todo:active {
   background-color: #c0ddf5;
 }
