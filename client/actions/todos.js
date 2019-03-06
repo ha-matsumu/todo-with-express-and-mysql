@@ -1,6 +1,7 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
 
+// action creators
 export const fetchTodosStart = () => {
   return {
     type: actionTypes.FETCH_TODOS_START
