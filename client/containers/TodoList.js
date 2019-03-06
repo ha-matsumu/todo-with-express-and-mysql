@@ -7,28 +7,33 @@ import * as actions from "../actions/index";
 
 class TodoList extends Component {
   componentDidMount() {
-    this.props.onFetchTodos();
+    this.props.fetchTodos();
   }
 
   render() {
-    let todos = <p style={{ textAlign: "center" }}>Something went wrong!</p>;
-    if (!this.props.loading) {
-      todos = this.props.todos.map(todo => {
-        return (
-          <Todo
-            key={todo.id}
-            id={todo.id}
-            title={todo.title}
-            body={todo.body}
-            completed={todo.completed}
-          />
-        );
-      });
+    if (this.props.loading) {
+      return <p style={{ textAlign: "center" }}>Now loading...</p>;
     }
+
+    if (this.props.error) {
+      return <p style={{ textAlign: "center" }}>Something went wrong...</p>;
+    }
+
+    const todos = this.props.todos.map(todo => {
+      return (
+        <Todo
+          key={todo.id}
+          id={todo.id}
+          title={todo.title}
+          body={todo.body}
+          completed={todo.completed}
+        />
+      );
+    });
 
     return (
       <div>
-        <section className="TodoList">{todos}</section>
+        <section className="todoList">{todos}</section>
       </div>
     );
   }
@@ -37,13 +42,14 @@ class TodoList extends Component {
 const mapStateToProps = state => {
   return {
     todos: state.todos.todos,
-    loading: state.todos.loading
+    loading: state.todos.loading,
+    error: state.todos.error
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchTodos: () => dispatch(actions.fetchTodos())
+    fetchTodos: () => dispatch(actions.fetchTodos())
   };
 };
 
