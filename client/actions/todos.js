@@ -29,21 +29,4 @@ export const fetchTodos = () => async dispatch => {
   } catch (error) {
     dispatch(fetchTodosFail(error));
   }
-
-  // export const fetchTodos = () => {
-  //   return dispatch => {
-  //     dispatch(fetchTodosStart());
-  //     axios
-  //       .get("/api/todos")
-  //       .then(response => {
-  //         // const fetchTodos = [];
-  //         // response.data.map(todo => {
-  //         //   fetchTodos.push(todo);
-  //         // });
-  //         dispatch(fetchTodosSuccess(response.data));
-  //       })
-  //       .catch(error => {
-  //         dispatch(fetchTodosFail(error));
-  //       });
-  //   };
 };
