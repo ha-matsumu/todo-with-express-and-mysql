@@ -2,20 +2,20 @@ import * as actionTypes from "./actionTypes";
 import axios from "axios";
 
 // action creators
-export const fetchTodosStart = () => {
+const fetchTodosStart = () => {
   return {
     type: actionTypes.FETCH_TODOS_START
   };
 };
 
-export const fetchTodosSuccess = todos => {
+const fetchTodosSuccess = todos => {
   return {
     type: actionTypes.FETCH_TODOS_SUCCESS,
     todos: todos
   };
 };
 
-export const fetchTodosFail = error => {
+const fetchTodosFail = error => {
   return {
     type: actionTypes.FETCH_TODOS_FAIL,
     error: error
