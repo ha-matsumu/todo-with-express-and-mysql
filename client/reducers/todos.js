@@ -1,5 +1,4 @@
 import * as actionTypes from "../actions/actionTypes";
-import { updateObject } from "./utility";
 
 const initialState = {
   todos: [],
@@ -8,18 +7,27 @@ const initialState = {
 };
 
 const fetchTodosStart = (state, action) => {
-  return updateObject(state, { loading: true });
+  return {
+    ...state,
+    loading: true
+  };
 };
 
 const fetchTodosSuccess = (state, action) => {
-  return updateObject(state, {
+  return {
+    ...state,
     todos: action.todos,
-    loading: false
-  });
+    loading: false,
+    error: false
+  };
 };
 
 const fetchTodosFail = (state, action) => {
-  return updateObject(state, { loading: false });
+  return {
+    ...state,
+    loading: false,
+    error: true
+  };
 };
 
 // handling actions
