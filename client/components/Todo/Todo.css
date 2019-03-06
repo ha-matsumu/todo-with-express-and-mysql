@@ -1,0 +1,15 @@
+.Todo {
+  width: 250px;
+  padding: 16px;
+  text-align: center;
+  border: 1px solid #eee;
+  margin: 10px;
+  box-sizing: border-box;
+  cursor: pointer;
+  background-color: #ffb300;
+}
+
+.Todo:hover,
+.Todo:active {
+  background-color: #c0ddf5;
+}
