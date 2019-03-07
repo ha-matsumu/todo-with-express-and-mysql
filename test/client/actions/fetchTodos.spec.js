@@ -23,7 +23,7 @@ describe("actions", () => {
       });
 
       const expectedActions = [
-        { type: actionTypes.FETCH_TODOS_START },
+        { type: actionTypes.REQUEST_START },
         {
           type: actionTypes.FETCH_TODOS_SUCCESS,
           todos: { todos: ["do something"] }
