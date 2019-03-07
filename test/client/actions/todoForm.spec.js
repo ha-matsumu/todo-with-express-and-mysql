@@ -32,7 +32,7 @@ describe("actions", () => {
         { type: actionTypes.ADD_TODO_START },
         {
           type: actionTypes.ADD_TODO_SUCCESS,
-          todo: todo
+          todo: { todo }
         }
       ];
 
