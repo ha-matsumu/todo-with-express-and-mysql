@@ -61,7 +61,12 @@ const mapDispatchToProps = dispatch => {
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   loading: PropTypes.bool.isRequired,
-  error: PropTypes.any
+
+  // This error refers to error object of state in the client/reducers/todos.js
+  error: PropTypes.shape({
+    message: PropTypes.string,
+    statusCode: PropTypes.number
+  })
 };
 
 export default connect(
