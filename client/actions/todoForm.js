@@ -23,10 +23,9 @@ const addTodoFail = error => {
 };
 
 export const addTodo = todo => async dispatch => {
-  console.log(JSON.stringify(todo));
   try {
     dispatch(addTodoStart());
-    const response = await axios.post("/api/todos", JSON.stringify(todo));
+    const response = await axios.post("/api/todos", todo);
     dispatch(addTodoSuccess(response.data));
   } catch (error) {
     dispatch(addTodoFail(error));
