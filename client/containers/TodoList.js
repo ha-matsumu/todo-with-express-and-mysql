@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 import Todo from "../components/Todo/Todo";
 import "./TodoList.css";
@@ -55,6 +56,17 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchTodos: () => dispatch(actions.fetchTodos())
   };
+};
+
+TodoList.propTypes = {
+  todos: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  loading: PropTypes.bool.isRequired,
+
+  // This error refers to error object of state in the client/reducers/todos.js
+  error: PropTypes.shape({
+    message: PropTypes.string,
+    statusCode: PropTypes.number
+  })
 };
 
 export default connect(
