@@ -2,10 +2,10 @@ import React from "react";
 
 import "./Todo.css";
 
-const todo = props => (
+const Todo = props => (
   <article className="todo">
     <h1>{props.title}</h1>
   </article>
 );
 
-export default todo;
+export default Todo;
