@@ -23,10 +23,14 @@ const fetchTodosSuccess = (state, action) => {
 };
 
 const fetchTodosFail = (state, action) => {
+  const error = {
+    message: action.error.response.statusText,
+    statusCode: action.error.response.status
+  };
   return {
     ...state,
     loading: false,
-    error: action.error
+    error
   };
 };
 
