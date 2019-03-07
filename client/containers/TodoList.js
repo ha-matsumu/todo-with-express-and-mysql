@@ -16,7 +16,11 @@ class TodoList extends Component {
     }
 
     if (this.props.error) {
-      return <p style={{ textAlign: "center" }}>Something went wrong...</p>;
+      const error = Object.keys(this.props.error).map(key => {
+        return this.props.error[key];
+      });
+      const errorMessage = error[2].data.message;
+      return <p style={{ textAlign: "center" }}>{errorMessage}</p>;
     }
 
     const todos = this.props.todos.map(todo => {
