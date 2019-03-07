@@ -63,12 +63,10 @@ TodoList.propTypes = {
   loading: PropTypes.bool.isRequired,
 
   // This error refers to error object of state in the client/reducers/todos.js
-  error: PropTypes.objectOf(
-    PropTypes.shape({
-      message: PropTypes.string,
-      statusCode: PropTypes.number
-    })
-  )
+  error: PropTypes.shape({
+    message: PropTypes.string,
+    statusCode: PropTypes.number
+  })
 };
 
 export default connect(
