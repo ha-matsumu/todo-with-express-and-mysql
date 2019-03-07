@@ -1,20 +1,12 @@
 import React, { Component } from "react";
 
-class App extends Component {
-  componentDidMount() {
-    fetch("/api/todos")
-      .then(response => {
-        return response.json();
-      })
-      .then(todos => {
-        console.log(todos);
-      });
-  }
+import TodoList from "./containers/TodoList";
 
+class App extends Component {
   render() {
     return (
       <div>
-        <h1>Hello TODO APP!!</h1>
+        <TodoList />
       </div>
     );
   }
