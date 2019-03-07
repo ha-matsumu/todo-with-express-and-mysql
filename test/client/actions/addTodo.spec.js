@@ -29,7 +29,7 @@ describe("actions", () => {
       });
 
       const expectedActions = [
-        { type: actionTypes.ADD_TODO_START },
+        { type: actionTypes.REQUEST_START },
         {
           type: actionTypes.ADD_TODO_SUCCESS,
           todo: { todo }
