@@ -2,9 +2,16 @@ import * as actionTypes from "./actionTypes";
 import axios from "axios";
 
 // action creators
-const fetchTodosStart = () => {
+const requestStart = () => {
   return {
-    type: actionTypes.FETCH_TODOS_START
+    type: actionTypes.REQUEST_START
+  };
+};
+
+const requestError = error => {
+  return {
+    type: actionTypes.REQUEST_ERROR,
+    error: error
   };
 };
 
@@ -15,19 +22,29 @@ const fetchTodosSuccess = todos => {
   };
 };
 
-const fetchTodosFail = error => {
+const addTodoSuccess = todo => {
   return {
-    type: actionTypes.FETCH_TODOS_FAIL,
-    error: error
+    type: actionTypes.ADD_TODO_SUCCESS,
+    todo: todo
   };
 };
 
 export const fetchTodos = () => async dispatch => {
   try {
-    dispatch(fetchTodosStart());
+    dispatch(requestStart());
     const response = await axios.get("/api/todos");
     dispatch(fetchTodosSuccess(response.data));
   } catch (error) {
-    dispatch(fetchTodosFail(error));
+    dispatch(requestError(error));
+  }
+};
+
+export const addTodo = todo => async dispatch => {
+  try {
+    dispatch(requestStart());
+    const response = await axios.post("/api/todos", todo);
+    dispatch(addTodoSuccess(response.data));
+  } catch (error) {
+    dispatch(requestError(error));
   }
 };
