@@ -26,7 +26,7 @@ const fetchTodosFail = (state, action) => {
   return {
     ...state,
     loading: false,
-    error: true
+    error: action.error
   };
 };
 
