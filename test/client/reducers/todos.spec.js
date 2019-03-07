@@ -21,14 +21,14 @@ describe("FETCH_TODOS", () => {
     expect(reducer(undefined, {})).toEqual({
       todos: [],
       loading: false,
-      error: false
+      error: null
     });
   });
 
   it("FETCH_TODOS_SUCCESSが処理されるはず", () => {
     expect(
       reducer(
-        { todos: [], loading: false, error: false },
+        { todos: [], loading: false, error: null },
         {
           type: actionTypes.FETCH_TODOS_SUCCESS,
           todos: todos
@@ -37,7 +37,7 @@ describe("FETCH_TODOS", () => {
     ).toEqual({
       todos: todos,
       loading: false,
-      error: false
+      error: null
     });
   });
 
@@ -48,12 +48,20 @@ describe("FETCH_TODOS", () => {
         {
           type: actionTypes.FETCH_TODOS_FAIL,
           loading: false,
-          error: true
+          error: {
+            response: {
+              statusText: "Internal Server Error",
+              status: 500
+            }
+          }
         }
       )
     ).toEqual({
       loading: false,
-      error: true
+      error: {
+        message: "Internal Server Error",
+        statusCode: 500
+      }
     });
   });
 });
