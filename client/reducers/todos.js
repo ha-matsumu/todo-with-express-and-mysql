@@ -3,7 +3,7 @@ import * as actionTypes from "../actions/actionTypes";
 const initialState = {
   todos: [],
   loading: false,
-  error: false
+  error: null
 };
 
 const fetchTodosStart = (state, action) => {
@@ -18,7 +18,7 @@ const fetchTodosSuccess = (state, action) => {
     ...state,
     todos: action.todos,
     loading: false,
-    error: false
+    error: null
   };
 };
 
