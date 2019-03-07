@@ -36,7 +36,7 @@ describe("actions", () => {
         }
       ];
 
-      const store = mockStore({ todo: {} });
+      const store = mockStore();
 
       store.dispatch(addTodo(todo)).then(() => {
         const result = store.getActions();
