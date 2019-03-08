@@ -30,7 +30,6 @@ const addTodoSuccess = todo => {
 };
 
 const updateTodoSuccess = todo => {
-  console.log(todo);
   return {
     type: actionTypes.UPDATE_TODO_SUCCESS,
     todo: todo
