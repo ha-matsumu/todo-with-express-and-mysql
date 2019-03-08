@@ -37,7 +37,7 @@ const fetchTodosSuccess = (state, action) => {
 const addTodoSuccess = (state, action) => {
   return {
     ...state,
-    todos: action.todos,
+    todos: [...state.todos, action.todo],
     loading: false,
     error: null
   };
