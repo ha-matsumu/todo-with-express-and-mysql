@@ -8,15 +8,17 @@ describe("ADD_TODO", () => {
         { todos: [], loading: false, error: null },
         {
           type: actionTypes.ADD_TODO_SUCCESS,
-          todos: { title: "demo title", body: "demo body", completed: false }
+          todo: { title: "demo title", body: "demo body", completed: false }
         }
       )
     ).toEqual({
-      todos: {
-        title: "demo title",
-        body: "demo body",
-        completed: false
-      },
+      todos: [
+        {
+          title: "demo title",
+          body: "demo body",
+          completed: false
+        }
+      ],
       loading: false,
       error: null
     });
