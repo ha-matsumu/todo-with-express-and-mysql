@@ -6,7 +6,7 @@ const initialState = {
   error: null
 };
 
-const fetchTodosStart = (state, action) => {
+const requestStart = (state, action) => {
   return {
     ...state,
     loading: true
@@ -22,7 +22,7 @@ const fetchTodosSuccess = (state, action) => {
   };
 };
 
-const fetchTodosFail = (state, action) => {
+const requestError = (state, action) => {
   const error = {
     message: action.error.response.statusText,
     statusCode: action.error.response.status
@@ -37,12 +37,12 @@ const fetchTodosFail = (state, action) => {
 // handling actions
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.FETCH_TODOS_START:
-      return fetchTodosStart(state, action);
+    case actionTypes.REQUEST_START:
+      return requestStart(state, action);
     case actionTypes.FETCH_TODOS_SUCCESS:
       return fetchTodosSuccess(state, action);
-    case actionTypes.FETCH_TODOS_FAIL:
-      return fetchTodosFail(state, action);
+    case actionTypes.REQUEST_ERROR:
+      return requestError(state, action);
     default:
       return state;
   }

@@ -41,12 +41,12 @@ describe("FETCH_TODOS", () => {
     });
   });
 
-  it("FETCH_TODOS_FAILが処理されるはず", () => {
+  it("REQUEST_ERRORが処理されるはず", () => {
     expect(
       reducer(
         { loading: true },
         {
-          type: actionTypes.FETCH_TODOS_FAIL,
+          type: actionTypes.REQUEST_ERROR,
           loading: false,
           error: {
             response: {
