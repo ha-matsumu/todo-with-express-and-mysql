@@ -36,6 +36,13 @@ const updateTodoSuccess = todo => {
   };
 };
 
+const deleteTodoSuccess = todoId => {
+  return {
+    type: actionTypes.DELETE_TODO_SUCCESS,
+    todoId: todoId
+  };
+};
+
 export const fetchTodos = () => async dispatch => {
   try {
     dispatch(requestStart());
@@ -61,6 +68,16 @@ export const updateTodo = todo => async dispatch => {
     dispatch(requestStart());
     const response = await axios.put(`/api/todos/${todo.id}`, todo);
     dispatch(updateTodoSuccess(response.data));
+  } catch (error) {
+    dispatch(requestError(error));
+  }
+};
+
+export const deleteTodo = todoId => async dispatch => {
+  try {
+    dispatch(requestStart());
+    await axios.delete(`/api/todos/${todoId}`);
+    dispatch(deleteTodoSuccess(todoId));
   } catch (error) {
     dispatch(requestError(error));
   }
