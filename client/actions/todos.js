@@ -29,6 +29,14 @@ const addTodoSuccess = todo => {
   };
 };
 
+const updateTodoSuccess = todo => {
+  console.log(todo);
+  return {
+    type: actionTypes.UPDATE_TODO_SUCCESS,
+    todo: todo
+  };
+};
+
 export const fetchTodos = () => async dispatch => {
   try {
     dispatch(requestStart());
@@ -44,6 +52,16 @@ export const addTodo = todo => async dispatch => {
     dispatch(requestStart());
     const response = await axios.post("/api/todos", todo);
     dispatch(addTodoSuccess(response.data));
+  } catch (error) {
+    dispatch(requestError(error));
+  }
+};
+
+export const updateTodo = todo => async dispatch => {
+  try {
+    dispatch(requestStart());
+    const response = await axios.put(`/api/todos/${todo.id}`, todo);
+    dispatch(updateTodoSuccess(response.data));
   } catch (error) {
     dispatch(requestError(error));
   }
