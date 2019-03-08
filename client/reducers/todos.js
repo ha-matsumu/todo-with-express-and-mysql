@@ -56,6 +56,21 @@ const updateTodoSuccess = (state, action) => {
   };
 };
 
+const deleteTodoSuccess = (state, action) => {
+  console.log(state);
+  console.log(action);
+  return {
+    ...state,
+    todos: [
+      ...state.todos.filter(todo => {
+        return todo.id !== action.todoId;
+      })
+    ],
+    loading: false,
+    error: null
+  };
+};
+
 // handling actions
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -69,6 +84,8 @@ const reducer = (state = initialState, action) => {
       return addTodoSuccess(state, action);
     case actionTypes.UPDATE_TODO_SUCCESS:
       return updateTodoSuccess(state, action);
+    case actionTypes.DELETE_TODO_SUCCESS:
+      return deleteTodoSuccess(state, action);
     default:
       return state;
   }
