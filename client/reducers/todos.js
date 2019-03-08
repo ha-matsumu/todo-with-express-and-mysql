@@ -43,6 +43,19 @@ const addTodoSuccess = (state, action) => {
   };
 };
 
+const updateTodoSuccess = (state, action) => {
+  return {
+    ...state,
+    todos: [
+      ...state.todos.map(todo => {
+        return todo.id === action.todo.id ? action.todo : todo;
+      })
+    ],
+    loading: false,
+    error: null
+  };
+};
+
 // handling actions
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -54,6 +67,8 @@ const reducer = (state = initialState, action) => {
       return fetchTodosSuccess(state, action);
     case actionTypes.ADD_TODO_SUCCESS:
       return addTodoSuccess(state, action);
+    case actionTypes.UPDATE_TODO_SUCCESS:
+      return updateTodoSuccess(state, action);
     default:
       return state;
   }
