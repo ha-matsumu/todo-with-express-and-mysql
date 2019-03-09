@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import Todo from "../components/Todo/Todo";
+import Todo from "../../components/Todo/Todo";
 import "./TodoList.css";
-import * as actions from "../actions/index";
+import * as actions from "../../actions/index";
 
 class TodoList extends Component {
   componentDidMount() {
