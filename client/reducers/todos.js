@@ -57,8 +57,6 @@ const updateTodoSuccess = (state, action) => {
 };
 
 const deleteTodoSuccess = (state, action) => {
-  console.log(state);
-  console.log(action);
   return {
     ...state,
     todos: [
