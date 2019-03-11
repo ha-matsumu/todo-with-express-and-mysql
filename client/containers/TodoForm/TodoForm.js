@@ -17,6 +17,8 @@ class TodoForm extends Component {
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.cancelHandler = this.cancelHandler.bind(this);
+    this.requestHandler = this.requestHandler.bind(this);
   }
 
   componentDidUpdate() {
@@ -101,7 +103,9 @@ class TodoForm extends Component {
             </select>
           </label>
         )}
-        <button className="Cancel" onClick={this.cancelHandler}>Cancel</button>
+        <button className="Cancel" onClick={this.cancelHandler}>
+          Cancel
+        </button>
         <button onClick={this.requestHandler}>
           {this.state.requestAdd ? "Add Todo" : "Update Todo"}
         </button>
