@@ -39,10 +39,10 @@ class TodoList extends Component {
 
     return (
       <div>
-        <section className="todoList">{todos}</section>
         <section>
           <TodoForm addTodo={this.props.addTodo} />
         </section>
+        <section className="todoList">{todos}</section>
       </div>
     );
   }
