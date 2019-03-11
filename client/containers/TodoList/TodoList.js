@@ -20,7 +20,6 @@ class TodoList extends Component {
   }
 
   selectTodoHandler = id => {
-    console.log(id);
     this.setState({ selectedTodoId: id });
   };
 
