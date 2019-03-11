@@ -1,0 +1,40 @@
+.todoForm {
+  width: 80%;
+  margin: 20px auto;
+  border: 1px solid #eee;
+  text-align: center;
+}
+
+.todoForm label {
+  display: block;
+  margin: 10px auto;
+  text-align: center;
+  font-weight: bold;
+}
+
+.todoForm input,
+.todoForm textarea {
+  display: block;
+  width: 80%;
+  box-sizing: border-box;
+  border: 1px solid black;
+  outline: none;
+  font: inherit;
+  margin: auto;
+}
+
+.todoForm button {
+  margin: 5px 0;
+  padding: 10px;
+  font: inherit;
+  border: 1px solid #fa923f;
+  background-color: transparent;
+  color: #fa923f;
+  cursor: pointer;
+}
+
+.todoForm button:hover,
+.todoForm button:active {
+  color: white;
+  background-color: #fa923f;
+}

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 import Todo from "../../components/Todo/Todo";
 import "./TodoList.css";
+import TodoForm from "../TodoForm/TodoForm";
 import * as actions from "../../actions/index";
 
 class TodoList extends Component {
@@ -38,6 +39,9 @@ class TodoList extends Component {
 
     return (
       <div>
+        <section>
+          <TodoForm addTodo={this.props.addTodo} />
+        </section>
         <section className="todoList">{todos}</section>
       </div>
     );
@@ -54,7 +58,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchTodos: () => dispatch(actions.fetchTodos())
+    fetchTodos: () => dispatch(actions.fetchTodos()),
+    addTodo: todo => dispatch(actions.addTodo(todo))
   };
 };
 
@@ -66,7 +71,9 @@ TodoList.propTypes = {
   error: PropTypes.shape({
     message: PropTypes.string,
     statusCode: PropTypes.number
-  })
+  }),
+  fetchTodos: PropTypes.func.isRequired,
+  addTodo: PropTypes.func.isRequired
 };
 
 export default connect(
