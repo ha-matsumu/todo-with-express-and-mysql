@@ -8,9 +8,21 @@ import TodoForm from "../TodoForm/TodoForm";
 import * as actions from "../../actions/index";
 
 class TodoList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedTodoId: null
+    };
+  }
+
   componentDidMount() {
     this.props.fetchTodos();
   }
+
+  selectTodoHandler = id => {
+    console.log(id);
+    this.setState({ selectedTodoId: id });
+  };
 
   render() {
     if (this.props.loading) {
@@ -33,6 +45,7 @@ class TodoList extends Component {
           title={todo.title}
           body={todo.body}
           completed={todo.completed}
+          clicked={() => this.selectTodoHandler(todo.id)}
         />
       );
     });
@@ -40,7 +53,11 @@ class TodoList extends Component {
     return (
       <div>
         <section>
-          <TodoForm addTodo={this.props.addTodo} />
+          <TodoForm
+            addTodo={this.props.addTodo}
+            updateTodo={this.props.updateTodo}
+            selectedTodoId={this.state.selectedTodoId}
+          />
         </section>
         <section className="todoList">{todos}</section>
       </div>
@@ -59,7 +76,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchTodos: () => dispatch(actions.fetchTodos()),
-    addTodo: todo => dispatch(actions.addTodo(todo))
+    addTodo: todo => dispatch(actions.addTodo(todo)),
+    updateTodo: todo => dispatch(actions.updateTodo(todo))
   };
 };
 
@@ -73,7 +91,8 @@ TodoList.propTypes = {
     statusCode: PropTypes.number
   }),
   fetchTodos: PropTypes.func.isRequired,
-  addTodo: PropTypes.func.isRequired
+  addTodo: PropTypes.func.isRequired,
+  updateTodo: PropTypes.func.isRequired
 };
 
 export default connect(
