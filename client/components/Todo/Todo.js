@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import "./Todo.css";
 
 const Todo = props => (
-  <article className="todo">
+  <article className="todo" onClick={props.clicked}>
     <h1>{props.title}</h1>
   </article>
 );
