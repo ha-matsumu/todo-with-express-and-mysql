@@ -5,6 +5,8 @@ import axios from "axios";
 import "./TodoForm.css";
 
 class UpdateTodoForm extends Component {
+  isMounted = false;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -18,17 +20,22 @@ class UpdateTodoForm extends Component {
     this.updateTodoHandler = this.updateTodoHandler.bind(this);
   }
 
-  componentDidUpdate() {
-    if (this.props.selectedTodoId !== this.state.id) {
-      axios.get("/api/todos/" + this.props.selectedTodoId).then(response => {
+  componentDidMount() {
+    this.isMounted = true;
+    axios.get("/api/todos/" + this.props.selectedTodoId).then(response => {
+      if (this.isMounted) {
         this.setState({
           id: response.data.id,
           title: response.data.title,
           body: response.data.body,
           completed: response.data.completed
         });
-      });
-    }
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    this.isMounted = false;
   }
 
   handleInputChange = event => {
@@ -41,7 +48,7 @@ class UpdateTodoForm extends Component {
     });
   };
 
-  updateTodoHandler = () => {
+  updateTodoHandler = async () => {
     if (!this.state.title) return;
     const todo = {
       id: this.state.id,
@@ -49,15 +56,8 @@ class UpdateTodoForm extends Component {
       body: this.state.body,
       completed: this.state.completed
     };
-    this.props.updateTodo(todo);
+    await this.props.updateTodo(todo);
     this.props.resetStateHandler();
-    this.setState({
-      id: null,
-      title: "",
-      body: "",
-      completed: false,
-      requestAdd: true
-    });
   };
 
   render() {
