@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import axios from "axios";
 
@@ -13,6 +12,7 @@ class TodoForm extends Component {
       title: "",
       body: "",
       completed: false,
+      // requestAdd: !props.selectedTodoId
       requestAdd: true
     };
 
@@ -55,11 +55,9 @@ class TodoForm extends Component {
       body: this.state.body,
       completed: this.state.completed
     };
-    {
-      this.state.requestAdd
-        ? this.props.addTodo(todo)
-        : this.props.updateTodo(todo);
-    }
+    this.state.requestAdd
+      ? this.props.addTodo(todo)
+      : this.props.updateTodo(todo);
     this.setState({
       id: null,
       title: "",
@@ -116,7 +114,8 @@ class TodoForm extends Component {
 
 TodoForm.propTypes = {
   addTodo: PropTypes.func.isRequired,
-  updateTodo: PropTypes.func.isRequired
+  updateTodo: PropTypes.func.isRequired,
+  selectedTodoId: PropTypes.number
 };
 
 export default TodoForm;
