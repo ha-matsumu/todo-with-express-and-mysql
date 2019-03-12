@@ -18,17 +18,6 @@ class UpdateTodoForm extends Component {
     this.updateTodoHandler = this.updateTodoHandler.bind(this);
   }
 
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   console.log("props :", nextProps);
-  //   console.log("state : ", prevState);
-  //   if (nextProps.selectedTodoId !== prevState.id) {
-  //     return {
-  //       id: null
-  //     };
-  //   }
-  //   return null;
-  // }
-
   componentDidUpdate() {
     if (this.props.selectedTodoId !== this.state.id) {
       axios.get("/api/todos/" + this.props.selectedTodoId).then(response => {
@@ -72,10 +61,6 @@ class UpdateTodoForm extends Component {
   };
 
   render() {
-    console.log(this.state.id);
-    console.log(this.state.title);
-    console.log(this.state.body);
-    console.log(this.state.completed);
     return (
       <div className="todoForm">
         <h1>Update Todo</h1>
