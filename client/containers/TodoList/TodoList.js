@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 
 import Todo from "../../components/Todo/Todo";
 import "./TodoList.css";
-import TodoForm from "../TodoForm/TodoForm";
+import AddTodoForm from "../TodoForm/AddTodoForm";
+import UpdateTodoForm from "../TodoForm/UpdateTodoForm";
 import * as actions from "../../actions/index";
 
 class TodoList extends Component {
@@ -21,6 +22,10 @@ class TodoList extends Component {
 
   selectTodoHandler = id => {
     this.setState({ selectedTodoId: id });
+  };
+
+  resetStateHandler = () => {
+    this.setState({ selectedTodoId: null });
   };
 
   render() {
@@ -49,15 +54,20 @@ class TodoList extends Component {
       );
     });
 
+    let todoForm = <AddTodoForm addTodo={this.props.addTodo} />;
+    if (this.state.selectedTodoId) {
+      todoForm = (
+        <UpdateTodoForm
+          updateTodo={this.props.updateTodo}
+          selectedTodoId={this.state.selectedTodoId}
+          resetStateHandler={this.resetStateHandler}
+        />
+      );
+    }
+
     return (
       <div>
-        <section>
-          <TodoForm
-            addTodo={this.props.addTodo}
-            updateTodo={this.props.updateTodo}
-            selectedTodoId={this.state.selectedTodoId}
-          />
-        </section>
+        <section>{todoForm}</section>
         <section className="todoList">{todos}</section>
       </div>
     );
