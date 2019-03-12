@@ -9,7 +9,8 @@ class AddTodoForm extends Component {
     this.state = {
       title: "",
       body: "",
-      completed: false
+      completed: false,
+      error: null
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -26,21 +27,26 @@ class AddTodoForm extends Component {
     });
   };
 
-  addTodoHandler = () => {
+  addTodoHandler = async () => {
     if (!this.state.title) return;
     const todo = {
       title: this.state.title,
       body: this.state.body,
       completed: this.state.completed
     };
-    this.props.addTodo(todo);
-    this.setState({
-      title: "",
-      body: ""
-    });
+    try {
+      await this.props.addTodo(todo);
+    } catch (error) {
+      this.setState({ error: error });
+    }
   };
 
   render() {
+    let error = null;
+    if (this.state.error) {
+      error = <p style={{ textAlign: "center" }}>{this.state.error}</p>;
+    }
+
     return (
       <div className="todoForm">
         <h1>Add a Todo</h1>
@@ -63,6 +69,7 @@ class AddTodoForm extends Component {
           />
         </label>
         <button onClick={this.addTodoHandler}>Add Todo</button>
+        {error}
       </div>
     );
   }
