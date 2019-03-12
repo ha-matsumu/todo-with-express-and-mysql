@@ -44,7 +44,7 @@ class TodoList extends Component {
           title={todo.title}
           body={todo.body}
           completed={todo.completed}
-          selectedTodo={this.selectTodoHandler.bind(this, todo.id)}
+          selectTodo={this.selectTodoHandler.bind(this, todo.id)}
         />
       );
     });
