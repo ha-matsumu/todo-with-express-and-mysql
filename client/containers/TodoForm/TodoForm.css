@@ -13,7 +13,8 @@
 }
 
 .todoForm input,
-.todoForm textarea {
+.todoForm textarea,
+.todoForm select {
   display: block;
   width: 80%;
   box-sizing: border-box;
@@ -24,17 +25,28 @@
 }
 
 .todoForm button {
-  margin: 5px 0;
+  margin: 5px 5px;
   padding: 10px;
   font: inherit;
-  border: 1px solid #fa923f;
+  border: 1px solid lightgreen;
   background-color: transparent;
-  color: #fa923f;
+  color: lightgreen;
   cursor: pointer;
+}
+
+.todoForm button.Cancel {
+  border: 1px solid red;
+  color: red;
 }
 
 .todoForm button:hover,
 .todoForm button:active {
   color: white;
-  background-color: #fa923f;
+  background-color: lightgreen;
+}
+
+.todoForm button.Cancel:hover,
+.todoForm button.Cancel:active {
+  color: white;
+  background-color: red;
 }

@@ -3,19 +3,21 @@ import PropTypes from "prop-types";
 
 import "./TodoForm.css";
 
-class TodoForm extends Component {
+class AddTodoForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       title: "",
       body: "",
-      completed: false
+      completed: false,
+      error: null
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.addTodoHandler = this.addTodoHandler.bind(this);
   }
 
-  handleInputChange(event) {
+  handleInputChange = event => {
     const target = event.target;
     const value = target.value;
     const name = target.name;
@@ -23,23 +25,28 @@ class TodoForm extends Component {
     this.setState({
       [name]: value
     });
-  }
+  };
 
-  addTodoHandler = () => {
+  addTodoHandler = async () => {
     if (!this.state.title) return;
     const todo = {
       title: this.state.title,
       body: this.state.body,
       completed: this.state.completed
     };
-    this.props.addTodo(todo);
-    this.setState({
-      title: "",
-      body: ""
-    });
+    try {
+      await this.props.addTodo(todo);
+    } catch (error) {
+      this.setState({ error: error });
+    }
   };
 
   render() {
+    let error = null;
+    if (this.state.error) {
+      error = <p style={{ textAlign: "center" }}>{this.state.error}</p>;
+    }
+
     return (
       <div className="todoForm">
         <h1>Add a Todo</h1>
@@ -62,13 +69,14 @@ class TodoForm extends Component {
           />
         </label>
         <button onClick={this.addTodoHandler}>Add Todo</button>
+        {error}
       </div>
     );
   }
 }
 
-TodoForm.propTypes = {
+AddTodoForm.propTypes = {
   addTodo: PropTypes.func.isRequired
 };
 
-export default TodoForm;
+export default AddTodoForm;

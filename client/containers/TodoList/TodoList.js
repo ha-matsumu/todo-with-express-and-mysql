@@ -4,13 +4,29 @@ import PropTypes from "prop-types";
 
 import Todo from "../../components/Todo/Todo";
 import "./TodoList.css";
-import TodoForm from "../TodoForm/TodoForm";
+import AddTodoForm from "../TodoForm/AddTodoForm";
+import UpdateTodoForm from "../TodoForm/UpdateTodoForm";
 import * as actions from "../../actions/index";
 
 class TodoList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedTodoId: null
+    };
+  }
+
   componentDidMount() {
     this.props.fetchTodos();
   }
+
+  selectTodoHandler = id => {
+    this.setState({ selectedTodoId: id });
+  };
+
+  resetStateHandler = () => {
+    this.setState({ selectedTodoId: null });
+  };
 
   render() {
     if (this.props.loading) {
@@ -33,15 +49,25 @@ class TodoList extends Component {
           title={todo.title}
           body={todo.body}
           completed={todo.completed}
+          selectTodo={this.selectTodoHandler.bind(this, todo.id)}
         />
       );
     });
 
+    let todoForm = <AddTodoForm addTodo={this.props.addTodo} />;
+    if (this.state.selectedTodoId) {
+      todoForm = (
+        <UpdateTodoForm
+          updateTodo={this.props.updateTodo}
+          selectedTodoId={this.state.selectedTodoId}
+          resetStateHandler={this.resetStateHandler}
+        />
+      );
+    }
+
     return (
       <div>
-        <section>
-          <TodoForm addTodo={this.props.addTodo} />
-        </section>
+        <section>{todoForm}</section>
         <section className="todoList">{todos}</section>
       </div>
     );
@@ -59,7 +85,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchTodos: () => dispatch(actions.fetchTodos()),
-    addTodo: todo => dispatch(actions.addTodo(todo))
+    addTodo: todo => dispatch(actions.addTodo(todo)),
+    updateTodo: todo => dispatch(actions.updateTodo(todo))
   };
 };
 
@@ -73,7 +100,8 @@ TodoList.propTypes = {
     statusCode: PropTypes.number
   }),
   fetchTodos: PropTypes.func.isRequired,
-  addTodo: PropTypes.func.isRequired
+  addTodo: PropTypes.func.isRequired,
+  updateTodo: PropTypes.func.isRequired
 };
 
 export default connect(
