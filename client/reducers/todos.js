@@ -2,7 +2,7 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   todos: [],
-  // This todo is updated 
+  // This todo is updated
   // only when action type equals FETCH_TODO_BY_ID_SUCCESS.
   todo: null,
   loading: false,
@@ -32,7 +32,8 @@ const fetchTodosSuccess = (state, action) => {
   return {
     ...state,
     todos: action.todos,
-    loading: false
+    loading: false,
+    error: null
   };
 };
 
@@ -40,7 +41,8 @@ const addTodoSuccess = (state, action) => {
   return {
     ...state,
     todos: [...state.todos, action.todo],
-    loading: false
+    loading: false,
+    error: null
   };
 };
 
@@ -52,7 +54,8 @@ const updateTodoSuccess = (state, action) => {
         return todo.id === action.todo.id ? action.todo : todo;
       })
     ],
-    loading: false
+    loading: false,
+    error: null
   };
 };
 
@@ -64,7 +67,8 @@ const deleteTodoSuccess = (state, action) => {
         return todo.id !== action.todoId;
       })
     ],
-    loading: false
+    loading: false,
+    error: null
   };
 };
 
@@ -72,7 +76,8 @@ const fetchTodoByIdSuccess = (state, action) => {
   return {
     ...state,
     todo: action.todo,
-    loading: false
+    loading: false,
+    error: null
   };
 };
 
