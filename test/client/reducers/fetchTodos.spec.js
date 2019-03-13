@@ -26,10 +26,35 @@ describe("FETCH_TODOS", () => {
     });
   });
 
-  it("FETCH_TODOS_SUCCESSが処理されるはず", () => {
+  it("FETCH_TODOS_SUCCESSが処理されるはず(errorオブジェクトがない状態)", () => {
     expect(
       reducer(
         { todos: [], todo: null, loading: false, error: null },
+        {
+          type: actionTypes.FETCH_TODOS_SUCCESS,
+          todos: todos
+        }
+      )
+    ).toEqual({
+      todos: todos,
+      todo: null,
+      loading: false,
+      error: null
+    });
+  });
+
+  it("FETCH_TODOS_SUCCESSが処理されるはず(errorオブジェクトがある状態)", () => {
+    expect(
+      reducer(
+        {
+          todos: [],
+          todo: null,
+          loading: false,
+          error: {
+            message: "Internal Server Error",
+            statusCode: 500
+          }
+        },
         {
           type: actionTypes.FETCH_TODOS_SUCCESS,
           todos: todos
