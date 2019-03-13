@@ -2,6 +2,9 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   todos: [],
+  // This todo is updated
+  // only when action type equals to FETCH_TODO_BY_ID_SUCCESS.
+  todo: null,
   loading: false,
   error: null
 };
@@ -69,6 +72,15 @@ const deleteTodoSuccess = (state, action) => {
   };
 };
 
+const fetchTodoByIdSuccess = (state, action) => {
+  return {
+    ...state,
+    todo: action.todo,
+    loading: false,
+    error: null
+  };
+};
+
 // handling actions
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -84,6 +96,8 @@ const reducer = (state = initialState, action) => {
       return updateTodoSuccess(state, action);
     case actionTypes.DELETE_TODO_SUCCESS:
       return deleteTodoSuccess(state, action);
+    case actionTypes.FETCH_TODO_BY_ID_SUCCESS:
+      return fetchTodoByIdSuccess(state, action);
     default:
       return state;
   }
