@@ -26,6 +26,7 @@ describe("DELETE_TODO", () => {
               completed: false
             }
           ],
+          todo: null,
           loading: false,
           error: null
         },
@@ -49,6 +50,7 @@ describe("DELETE_TODO", () => {
           completed: false
         }
       ],
+      todo: null,
       loading: false,
       error: null
     });
