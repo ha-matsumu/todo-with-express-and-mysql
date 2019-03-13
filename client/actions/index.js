@@ -1,1 +1,7 @@
-export { fetchTodos, addTodo, updateTodo, deleteTodo } from "./todos";
+export {
+  fetchTodos,
+  addTodo,
+  updateTodo,
+  deleteTodo,
+  fetchTodoById
+} from "./todos";

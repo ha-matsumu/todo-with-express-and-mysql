@@ -43,6 +43,13 @@ const deleteTodoSuccess = todoId => {
   };
 };
 
+const fetchTodoByIdSuccess = todo => {
+  return {
+    type: actionTypes.FETCH_TODO_BY_ID_SUCCESS,
+    todo: todo
+  };
+};
+
 export const fetchTodos = () => async dispatch => {
   try {
     dispatch(requestStart());
@@ -78,6 +85,16 @@ export const deleteTodo = todoId => async dispatch => {
     dispatch(requestStart());
     await axios.delete(`/api/todos/${todoId}`);
     dispatch(deleteTodoSuccess(todoId));
+  } catch (error) {
+    dispatch(requestError(error));
+  }
+};
+
+export const fetchTodoById = todoId => async dispatch => {
+  try {
+    dispatch(requestStart());
+    const response = await axios.get(`/api/todos/${todoId}`);
+    dispatch(fetchTodoByIdSuccess(response.data));
   } catch (error) {
     dispatch(requestError(error));
   }
