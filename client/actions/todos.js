@@ -44,7 +44,6 @@ const deleteTodoSuccess = todoId => {
 };
 
 const fetchTodoByIdSuccess = todo => {
-  console.log(todo);
   return {
     type: actionTypes.FETCH_TODO_BY_ID_SUCCESS,
     todo: todo
