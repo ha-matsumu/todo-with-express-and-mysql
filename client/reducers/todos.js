@@ -30,8 +30,7 @@ const fetchTodosSuccess = (state, action) => {
   return {
     ...state,
     todos: action.todos,
-    loading: false,
-    error: null
+    loading: false
   };
 };
 
@@ -39,8 +38,7 @@ const addTodoSuccess = (state, action) => {
   return {
     ...state,
     todos: [...state.todos, action.todo],
-    loading: false,
-    error: null
+    loading: false
   };
 };
 
@@ -52,8 +50,7 @@ const updateTodoSuccess = (state, action) => {
         return todo.id === action.todo.id ? action.todo : todo;
       })
     ],
-    loading: false,
-    error: null
+    loading: false
   };
 };
 
@@ -65,19 +62,15 @@ const deleteTodoSuccess = (state, action) => {
         return todo.id !== action.todoId;
       })
     ],
-    loading: false,
-    error: null
+    loading: false
   };
 };
 
 const fetchTodoByIdSuccess = (state, action) => {
-  console.log(state);
-  console.log(action);
   return {
     ...state,
     todo: action.todo,
-    loading: false,
-    error: null
+    loading: false
   };
 };
 
