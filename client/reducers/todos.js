@@ -3,7 +3,7 @@ import * as actionTypes from "../actions/actionTypes";
 const initialState = {
   todos: [],
   // This todo is updated
-  // only when action type equals FETCH_TODO_BY_ID_SUCCESS.
+  // only when action type equals to FETCH_TODO_BY_ID_SUCCESS.
   todo: null,
   loading: false,
   error: null
