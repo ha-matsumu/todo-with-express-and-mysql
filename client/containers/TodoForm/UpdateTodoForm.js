@@ -8,13 +8,26 @@ class UpdateTodoForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: this.props.todo.title,
-      body: this.props.todo.body,
-      completed: this.props.todo.completed
+      id: this.props.selectedTodo.id,
+      title: this.props.selectedTodo.title,
+      body: this.props.selectedTodo.body,
+      completed: this.props.selectedTodo.completed
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.updateTodoHandler = this.updateTodoHandler.bind(this);
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.selectedTodo.id !== prevState.id) {
+      return {
+        id: nextProps.selectedTodo.id,
+        title: nextProps.selectedTodo.title,
+        body: nextProps.selectedTodo.body,
+        completed: nextProps.selectedTodo.completed
+      };
+    }
+    return null;
   }
 
   handleInputChange = event => {
@@ -30,7 +43,7 @@ class UpdateTodoForm extends Component {
   updateTodoHandler = async () => {
     if (!this.state.title) return;
     const todo = {
-      id: this.props.todo.id,
+      id: this.state.id,
       title: this.state.title,
       body: this.state.body,
       completed: this.state.completed
@@ -85,6 +98,7 @@ const mapStateToProps = state => {
 };
 
 UpdateTodoForm.propTypes = {
+  selectedTodo: PropTypes.object.isRequired,
   updateTodo: PropTypes.func.isRequired,
   resetFormHandler: PropTypes.func.isRequired
 };
