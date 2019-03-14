@@ -8,7 +8,6 @@ class UpdateTodoForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: this.props.todo.id,
       title: this.props.todo.title,
       body: this.props.todo.body,
       completed: this.props.todo.completed
@@ -31,7 +30,7 @@ class UpdateTodoForm extends Component {
   updateTodoHandler = async () => {
     if (!this.state.title) return;
     const todo = {
-      id: this.state.id,
+      id: this.props.todo.id,
       title: this.state.title,
       body: this.state.body,
       completed: this.state.completed
