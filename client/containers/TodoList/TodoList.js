@@ -12,7 +12,7 @@ class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTodoId: null
+      requestUpdate: false
     };
   }
 
@@ -21,11 +21,12 @@ class TodoList extends Component {
   }
 
   selectTodoHandler = id => {
-    this.setState({ selectedTodoId: id });
+    this.setState({ requestUpdate: true });
+    this.props.fetchTodoById(id);
   };
 
-  resetStateHandler = () => {
-    this.setState({ selectedTodoId: null });
+  resetFormHandler = () => {
+    this.setState({ requestUpdate: false });
   };
 
   render() {
@@ -55,12 +56,11 @@ class TodoList extends Component {
     });
 
     let todoForm = <AddTodoForm addTodo={this.props.addTodo} />;
-    if (this.state.selectedTodoId) {
+    if (this.state.requestUpdate) {
       todoForm = (
         <UpdateTodoForm
           updateTodo={this.props.updateTodo}
-          selectedTodoId={this.state.selectedTodoId}
-          resetStateHandler={this.resetStateHandler}
+          resetFormHandler={this.resetFormHandler}
         />
       );
     }
@@ -77,6 +77,7 @@ class TodoList extends Component {
 const mapStateToProps = state => {
   return {
     todos: state.todos.todos,
+    todo: state.todos.todo,
     loading: state.todos.loading,
     error: state.todos.error
   };
@@ -86,12 +87,14 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchTodos: () => dispatch(actions.fetchTodos()),
     addTodo: todo => dispatch(actions.addTodo(todo)),
-    updateTodo: todo => dispatch(actions.updateTodo(todo))
+    updateTodo: todo => dispatch(actions.updateTodo(todo)),
+    fetchTodoById: todoId => dispatch(actions.fetchTodoById(todoId))
   };
 };
 
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  todo: PropTypes.object,
   loading: PropTypes.bool.isRequired,
 
   // This error refers to error object of state in the client/reducers/todos.js
@@ -101,7 +104,8 @@ TodoList.propTypes = {
   }),
   fetchTodos: PropTypes.func.isRequired,
   addTodo: PropTypes.func.isRequired,
-  updateTodo: PropTypes.func.isRequired
+  updateTodo: PropTypes.func.isRequired,
+  fetchTodoById: PropTypes.func.isRequired
 };
 
 export default connect(
