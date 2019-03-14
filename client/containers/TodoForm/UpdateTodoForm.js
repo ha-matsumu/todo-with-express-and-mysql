@@ -1,41 +1,21 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import axios from "axios";
 
 import "./TodoForm.css";
 
 class UpdateTodoForm extends Component {
-  isMounted = false;
-
   constructor(props) {
     super(props);
     this.state = {
-      id: null,
-      title: "",
-      body: "",
-      completed: false
+      id: this.props.todo.id,
+      title: this.props.todo.title,
+      body: this.props.todo.body,
+      completed: this.props.todo.completed
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.updateTodoHandler = this.updateTodoHandler.bind(this);
-  }
-
-  componentDidMount() {
-    this.isMounted = true;
-    axios.get("/api/todos/" + this.props.selectedTodoId).then(response => {
-      if (this.isMounted) {
-        this.setState({
-          id: response.data.id,
-          title: response.data.title,
-          body: response.data.body,
-          completed: response.data.completed
-        });
-      }
-    });
-  }
-
-  componentWillUnmount() {
-    this.isMounted = false;
   }
 
   handleInputChange = event => {
@@ -57,7 +37,7 @@ class UpdateTodoForm extends Component {
       completed: this.state.completed
     };
     await this.props.updateTodo(todo);
-    this.props.resetStateHandler();
+    this.props.resetFormHandler();
   };
 
   render() {
@@ -99,10 +79,15 @@ class UpdateTodoForm extends Component {
   }
 }
 
-UpdateTodoForm.propTypes = {
-  updateTodo: PropTypes.func.isRequired,
-  selectedTodoId: PropTypes.number,
-  resetStateHandler: PropTypes.func.isRequired
+const mapStateToProps = state => {
+  return {
+    todo: state.todos.todo
+  };
 };
 
-export default UpdateTodoForm;
+UpdateTodoForm.propTypes = {
+  updateTodo: PropTypes.func.isRequired,
+  resetFormHandler: PropTypes.func.isRequired
+};
+
+export default connect(mapStateToProps)(UpdateTodoForm);
