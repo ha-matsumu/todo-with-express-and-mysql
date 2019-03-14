@@ -1,0 +1,18 @@
+.add,
+.update {
+  margin: 5px 5px;
+  padding: 10px;
+  font: inherit;
+  border: 1px solid lightgreen;
+  background-color: transparent;
+  color: lightgreen;
+  cursor: pointer;
+}
+
+.add:hover,
+.update:hover,
+.add .update:active,
+.update .update:active {
+  color: white;
+  background-color: lightgreen;
+}
