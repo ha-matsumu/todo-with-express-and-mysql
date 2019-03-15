@@ -6,12 +6,15 @@ import Todo from "../../components/Todo/Todo";
 import "./TodoList.css";
 import AddTodoForm from "../TodoForm/AddTodoForm";
 import UpdateTodoForm from "../TodoForm/UpdateTodoForm";
+import Modal from "../../components/UI/Modal/Modal";
+import Button from "../../components/Button/Button";
 import * as actions from "../../actions/index";
 
 class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      purchaising: false,
       selectedTodo: null
     };
   }
@@ -20,9 +23,17 @@ class TodoList extends Component {
     this.props.fetchTodos();
   }
 
+  purchaseHandler = () => {
+    this.setState({ purchaising: true });
+  };
+
+  purchaseCancelHandler = () => {
+    this.setState({ purchaising: false, selectedTodo: null });
+  };
+
   selectTodoHandler = id => {
     const selectedTodo = this.props.todos.find(todo => todo.id === id);
-    this.setState({ selectedTodo });
+    this.setState({ purchaising: true, selectedTodo });
   };
 
   resetFormHandler = () => {
@@ -57,21 +68,39 @@ class TodoList extends Component {
       );
     });
 
-    let todoForm = <AddTodoForm addTodo={this.props.addTodo} />;
+    let todoForm = (
+      <AddTodoForm
+        addTodo={this.props.addTodo}
+        purchaseCancel={this.purchaseCancelHandler}
+      />
+    );
     if (this.state.selectedTodo) {
       todoForm = (
         <UpdateTodoForm
           selectedTodo={this.state.selectedTodo}
           updateTodo={this.props.updateTodo}
           resetFormHandler={this.resetFormHandler}
+          purchaseCancel={this.purchaseCancelHandler}
         />
       );
     }
 
     return (
       <div>
-        <section>{todoForm}</section>
-        <section className="todoList">{todos}</section>
+        <Modal
+          show={this.state.purchaising}
+          modalClosed={this.purchaseCancelHandler}
+        >
+          {todoForm}
+        </Modal>
+        <section className="todoList">
+          {todos}
+          <article>
+            <Button btnType="plus" clickButton={this.purchaseHandler}>
+              +
+            </Button>
+          </article>
+        </section>
       </div>
     );
   }
