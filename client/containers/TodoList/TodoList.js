@@ -22,7 +22,6 @@ class TodoList extends Component {
   }
 
   selectTodoHandler = id => {
-    this.resetFormHandler();
     const selectedTodo = this.props.todos.find(todo => todo.id === id);
     this.setState({ requestUpdate: true, selectedTodo });
   };
