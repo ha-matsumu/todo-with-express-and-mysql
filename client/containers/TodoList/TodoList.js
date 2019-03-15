@@ -36,12 +36,6 @@ class TodoList extends Component {
     this.setState({ purchaising: true, selectedTodo });
   };
 
-  resetFormHandler = () => {
-    this.setState({
-      selectedTodo: null
-    });
-  };
-
   render() {
     if (this.props.loading) {
       return <p style={{ textAlign: "center" }}>Now loading...</p>;
@@ -79,7 +73,6 @@ class TodoList extends Component {
         <UpdateTodoForm
           selectedTodo={this.state.selectedTodo}
           updateTodo={this.props.updateTodo}
-          resetFormHandler={this.resetFormHandler}
           purchaseCancel={this.purchaseCancelHandler}
         />
       );
