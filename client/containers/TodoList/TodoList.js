@@ -21,10 +21,10 @@ class TodoList extends Component {
     this.props.fetchTodos();
   }
 
-  selectTodoHandler = async id => {
+  selectTodoHandler = id => {
     this.resetFormHandler();
     const selectedTodo = this.props.todos.find(todo => todo.id === id);
-    await this.setState({ requestUpdate: true, selectedTodo });
+    this.setState({ requestUpdate: true, selectedTodo });
   };
 
   resetFormHandler = () => {
