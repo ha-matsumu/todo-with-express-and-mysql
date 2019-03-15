@@ -82,7 +82,7 @@ class TodoList extends Component {
       <div>
         <Modal
           show={this.state.purchaising}
-          modalClosed={this.purchaseCancelHandler}
+          closeModal={this.purchaseCancelHandler}
         >
           {todoForm}
         </Modal>
