@@ -18,16 +18,15 @@ class UpdateTodoForm extends Component {
     this.updateTodoHandler = this.updateTodoHandler.bind(this);
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.selectedTodo.id !== prevState.id) {
-      return {
-        id: nextProps.selectedTodo.id,
-        title: nextProps.selectedTodo.title,
-        body: nextProps.selectedTodo.body,
-        completed: nextProps.selectedTodo.completed
-      };
+  componentDidUpdate(prevState) {
+    if (this.props.selectedTodo.id !== prevState.selectedTodo.id) {
+      this.setState({
+        id: this.props.selectedTodo.id,
+        title: this.props.selectedTodo.title,
+        body: this.props.selectedTodo.body,
+        completed: this.props.selectedTodo.completed
+      });
     }
-    return null;
   }
 
   handleInputChange = event => {
