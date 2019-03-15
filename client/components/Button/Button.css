@@ -16,3 +16,30 @@
   color: white;
   background-color: lightgreen;
 }
+
+.cancel {
+  margin: 5px 5px;
+  padding: 10px;
+  font: inherit;
+  border: 1px solid red;
+  background-color: transparent;
+  color: red;
+  cursor: pointer;
+}
+
+.cancel:hover,
+.cancel .update:active {
+  color: white;
+  background-color: red;
+}
+
+.plus {
+  width: 250px;
+  padding: 16px;
+  text-align: center;
+  border: 1px solid #eee;
+  margin: 10px;
+  box-sizing: border-box;
+  cursor: pointer;
+  background-color: #ffb300;
+}
