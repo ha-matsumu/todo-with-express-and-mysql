@@ -40,6 +40,7 @@ class AddTodoForm extends Component {
     } catch (error) {
       this.setState({ error: error });
     }
+    this.props.purchaseCancel();
   };
 
   render() {
@@ -69,8 +70,12 @@ class AddTodoForm extends Component {
             onChange={this.handleInputChange}
           />
         </label>
-        <Button btnType="cancel" clickButton={this.props.purchaseCancel}>Cancel</Button>
-        <Button btnType="add" clickButton={this.addTodoHandler}>Add Todo</Button>
+        <Button btnType="cancel" clickButton={this.props.purchaseCancel}>
+          Cancel
+        </Button>
+        <Button btnType="add" clickButton={this.addTodoHandler}>
+          Add Todo
+        </Button>
         {error}
       </div>
     );
@@ -78,7 +83,8 @@ class AddTodoForm extends Component {
 }
 
 AddTodoForm.propTypes = {
-  addTodo: PropTypes.func.isRequired
+  addTodo: PropTypes.func.isRequired,
+  purchaseCancel: PropTypes.func.isRequired
 };
 
 export default AddTodoForm;
