@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import Button from "../../components/Button/Button";
 import "./TodoForm.css";
 
 class UpdateTodoForm extends Component {
@@ -84,7 +85,7 @@ class UpdateTodoForm extends Component {
             <option value="true">true</option>
           </select>
         </label>
-        <button onClick={this.updateTodoHandler}>Update Todo</button>
+        <Button btnType="update" clickButton={this.updateTodoHandler}>Update Todo</Button>
       </div>
     );
   }

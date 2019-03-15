@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
+import Button from "../../components/Button/Button";
 import "./TodoForm.css";
 
 class AddTodoForm extends Component {
@@ -68,7 +69,7 @@ class AddTodoForm extends Component {
             onChange={this.handleInputChange}
           />
         </label>
-        <button onClick={this.addTodoHandler}>Add Todo</button>
+        <Button btnType="add" clickButton={this.addTodoHandler}>Add Todo</Button>
         {error}
       </div>
     );

@@ -23,30 +23,3 @@
   font: inherit;
   margin: auto;
 }
-
-.todoForm button {
-  margin: 5px 5px;
-  padding: 10px;
-  font: inherit;
-  border: 1px solid lightgreen;
-  background-color: transparent;
-  color: lightgreen;
-  cursor: pointer;
-}
-
-.todoForm button.Cancel {
-  border: 1px solid red;
-  color: red;
-}
-
-.todoForm button:hover,
-.todoForm button:active {
-  color: white;
-  background-color: lightgreen;
-}
-
-.todoForm button.Cancel:hover,
-.todoForm button.Cancel:active {
-  color: white;
-  background-color: red;
-}
