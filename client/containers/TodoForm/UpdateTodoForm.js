@@ -85,6 +85,7 @@ class UpdateTodoForm extends Component {
             <option value="true">true</option>
           </select>
         </label>
+        <Button btnType="cancel" clickButton={this.props.purchaseCancel}>Cancel</Button>
         <Button btnType="update" clickButton={this.updateTodoHandler}>Update Todo</Button>
       </div>
     );

@@ -69,6 +69,7 @@ class AddTodoForm extends Component {
             onChange={this.handleInputChange}
           />
         </label>
+        <Button btnType="cancel" clickButton={this.props.purchaseCancel}>Cancel</Button>
         <Button btnType="add" clickButton={this.addTodoHandler}>Add Todo</Button>
         {error}
       </div>
