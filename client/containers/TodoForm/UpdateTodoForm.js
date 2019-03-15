@@ -9,14 +9,25 @@ class UpdateTodoForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: this.props.todo.id,
-      title: this.props.todo.title,
-      body: this.props.todo.body,
-      completed: this.props.todo.completed
+      id: this.props.selectedTodo.id,
+      title: this.props.selectedTodo.title,
+      body: this.props.selectedTodo.body,
+      completed: this.props.selectedTodo.completed
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.updateTodoHandler = this.updateTodoHandler.bind(this);
+  }
+
+  componentDidUpdate(prevState) {
+    if (this.props.selectedTodo.id !== prevState.selectedTodo.id) {
+      this.setState({
+        id: this.props.selectedTodo.id,
+        title: this.props.selectedTodo.title,
+        body: this.props.selectedTodo.body,
+        completed: this.props.selectedTodo.completed
+      });
+    }
   }
 
   handleInputChange = event => {
@@ -87,6 +98,7 @@ const mapStateToProps = state => {
 };
 
 UpdateTodoForm.propTypes = {
+  selectedTodo: PropTypes.object.isRequired,
   updateTodo: PropTypes.func.isRequired,
   resetFormHandler: PropTypes.func.isRequired
 };

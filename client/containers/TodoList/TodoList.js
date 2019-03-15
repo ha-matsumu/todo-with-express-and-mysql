@@ -12,7 +12,7 @@ class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      requestUpdate: false
+      selectedTodo: null
     };
   }
 
@@ -21,12 +21,14 @@ class TodoList extends Component {
   }
 
   selectTodoHandler = id => {
-    this.setState({ requestUpdate: true });
-    this.props.fetchTodoById(id);
+    const selectedTodo = this.props.todos.find(todo => todo.id === id);
+    this.setState({ selectedTodo });
   };
 
   resetFormHandler = () => {
-    this.setState({ requestUpdate: false });
+    this.setState({
+      selectedTodo: null
+    });
   };
 
   render() {
@@ -56,9 +58,10 @@ class TodoList extends Component {
     });
 
     let todoForm = <AddTodoForm addTodo={this.props.addTodo} />;
-    if (this.state.requestUpdate) {
+    if (this.state.selectedTodo) {
       todoForm = (
         <UpdateTodoForm
+          selectedTodo={this.state.selectedTodo}
           updateTodo={this.props.updateTodo}
           resetFormHandler={this.resetFormHandler}
         />
