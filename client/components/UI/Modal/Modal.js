@@ -1,11 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import "./Modal.css";
 import Backdrop from "../Backdrop/Backdrop";
 
-const modal = props => (
+const Modal = props => (
   <>
-    <Backdrop show={props.show} clicked={props.modalClosed} />
+    <Backdrop show={props.show} clicked={props.closeModal} />
     <div
       className="modal"
       style={{
@@ -18,4 +19,9 @@ const modal = props => (
   </>
 );
 
-export default modal;
+Modal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired
+};
+
+export default Modal;
