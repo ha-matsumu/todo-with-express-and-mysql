@@ -1,41 +1,32 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import axios from "axios";
 
 import "./TodoForm.css";
 
 class UpdateTodoForm extends Component {
-  isMounted = false;
-
   constructor(props) {
     super(props);
     this.state = {
-      id: null,
-      title: "",
-      body: "",
-      completed: false
+      id: this.props.selectedTodo.id,
+      title: this.props.selectedTodo.title,
+      body: this.props.selectedTodo.body,
+      completed: this.props.selectedTodo.completed
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.updateTodoHandler = this.updateTodoHandler.bind(this);
   }
 
-  componentDidMount() {
-    this.isMounted = true;
-    axios.get("/api/todos/" + this.props.selectedTodoId).then(response => {
-      if (this.isMounted) {
-        this.setState({
-          id: response.data.id,
-          title: response.data.title,
-          body: response.data.body,
-          completed: response.data.completed
-        });
-      }
-    });
-  }
-
-  componentWillUnmount() {
-    this.isMounted = false;
+  componentDidUpdate(prevState) {
+    if (this.props.selectedTodo.id !== prevState.selectedTodo.id) {
+      this.setState({
+        id: this.props.selectedTodo.id,
+        title: this.props.selectedTodo.title,
+        body: this.props.selectedTodo.body,
+        completed: this.props.selectedTodo.completed
+      });
+    }
   }
 
   handleInputChange = event => {
@@ -57,7 +48,7 @@ class UpdateTodoForm extends Component {
       completed: this.state.completed
     };
     await this.props.updateTodo(todo);
-    this.props.resetStateHandler();
+    this.props.resetFormHandler();
   };
 
   render() {
@@ -99,10 +90,16 @@ class UpdateTodoForm extends Component {
   }
 }
 
-UpdateTodoForm.propTypes = {
-  updateTodo: PropTypes.func.isRequired,
-  selectedTodoId: PropTypes.number,
-  resetStateHandler: PropTypes.func.isRequired
+const mapStateToProps = state => {
+  return {
+    todo: state.todos.todo
+  };
 };
 
-export default UpdateTodoForm;
+UpdateTodoForm.propTypes = {
+  selectedTodo: PropTypes.object.isRequired,
+  updateTodo: PropTypes.func.isRequired,
+  resetFormHandler: PropTypes.func.isRequired
+};
+
+export default connect(mapStateToProps)(UpdateTodoForm);
