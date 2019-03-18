@@ -83,7 +83,7 @@ class TodoList extends Component {
 
     return (
       <div>
-        <Modal shown={this.state.shown} closeModal={this.hideModalHandler}>
+        <Modal shown={this.state.shown} hideModalHandler={this.hideModalHandler}>
           {todoForm}
         </Modal>
         <section className="todoList">
