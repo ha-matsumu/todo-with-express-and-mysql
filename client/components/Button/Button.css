@@ -1,36 +1,21 @@
-.add,
-.update {
+button {
+  width: 100px;
   margin: 5px 5px;
   padding: 10px;
   font: inherit;
-  border: 1px solid lightgreen;
   background-color: transparent;
-  color: lightgreen;
   cursor: pointer;
 }
 
-.add:hover,
-.update:hover,
-.add .update:active,
-.update .update:active {
-  color: white;
-  background-color: lightgreen;
+.add,
+.update {
+  border: 1px solid lightgreen;
+  color: lightgreen;
 }
 
 .cancel {
-  margin: 5px 5px;
-  padding: 10px;
-  font: inherit;
   border: 1px solid red;
-  background-color: transparent;
   color: red;
-  cursor: pointer;
-}
-
-.cancel:hover,
-.cancel .update:active {
-  color: white;
-  background-color: red;
 }
 
 .plus {
@@ -40,6 +25,30 @@
   border: 1px solid #eee;
   margin: 10px;
   box-sizing: border-box;
-  cursor: pointer;
-  background-color: #ffb300;
+  background-color: gray;
 }
+
+button:hover,
+button:active {
+  color: white;
+}
+
+.add:hover,
+.update:hover,
+.add .update:active,
+.update .update:active {
+  background-color: lightgreen;
+}
+
+.cancel:hover,
+.cancel .update:active {
+  color: white;
+  background-color: red;
+}
+
+.plus:hover,
+.plus:active {
+  background-color: #c0ddf5;
+}
+
+
