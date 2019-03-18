@@ -56,7 +56,7 @@ class UpdateTodoForm extends Component {
   deleteTodoHandler = async () => {
     const confirmedDeletion = confirm("本当に削除しますか？");
     if (confirmedDeletion) {
-      this.props.deleteTodo(this.state.id);
+      await this.props.deleteTodo(this.state.id);
       this.props.hideModalHandler();
     }
   };
