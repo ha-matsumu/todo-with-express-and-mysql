@@ -6,12 +6,12 @@ import Backdrop from "../Backdrop/Backdrop";
 
 const Modal = props => (
   <>
-    <Backdrop show={props.show} clickBackdrop={props.closeModal} />
+    <Backdrop hidden={props.hidden} clickBackdrop={props.closeModal} />
     <div
       className="modal"
       style={{
-        transform: props.show ? "translateY(-100px)" : "translateY(-100vh)",
-        opacity: props.show ? "1" : "0"
+        transform: props.hidden ? "translateY(-100px)" : "translateY(-100vh)",
+        opacity: props.hidden ? "1" : "0"
       }}
     >
       {props.children}
@@ -20,7 +20,7 @@ const Modal = props => (
 );
 
 Modal.propTypes = {
-  show: PropTypes.bool.isRequired,
+  hidden: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired
 };
 
