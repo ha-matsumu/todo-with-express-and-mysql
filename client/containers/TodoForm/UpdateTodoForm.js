@@ -49,7 +49,7 @@ class UpdateTodoForm extends Component {
       completed: this.state.completed
     };
     await this.props.updateTodo(todo);
-    this.props.purchaseCancel();
+    this.props.hideModalHandler();
   };
 
   render() {
@@ -85,7 +85,7 @@ class UpdateTodoForm extends Component {
             <option value="true">true</option>
           </select>
         </label>
-        <Button btnType="cancel" clickButton={this.props.purchaseCancel}>
+        <Button btnType="cancel" clickButton={this.props.hideModalHandler}>
           Cancel
         </Button>
         <Button btnType="update" clickButton={this.updateTodoHandler}>
@@ -105,7 +105,7 @@ const mapStateToProps = state => {
 UpdateTodoForm.propTypes = {
   selectedTodo: PropTypes.object.isRequired,
   updateTodo: PropTypes.func.isRequired,
-  purchaseCancel: PropTypes.func.isRequired
+  hideModalHandler: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps)(UpdateTodoForm);

@@ -14,29 +14,29 @@ class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      purchaising: false,
+      shown: false,
       selectedTodo: null
     };
 
-    this.purchaseHandler = this.purchaseHandler.bind(this);
-    this.purchaseCancelHandler = this.purchaseCancelHandler.bind(this);
+    this.showModalHandler = this.showModalHandler.bind(this);
+    this.hideModalHandler = this.hideModalHandler.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchTodos();
   }
 
-  purchaseHandler = () => {
-    this.setState({ purchaising: true });
+  showModalHandler = () => {
+    this.setState({ shown: true });
   };
 
-  purchaseCancelHandler = () => {
-    this.setState({ purchaising: false, selectedTodo: null });
+  hideModalHandler = () => {
+    this.setState({ shown: false, selectedTodo: null });
   };
 
   selectTodoHandler = id => {
     const selectedTodo = this.props.todos.find(todo => todo.id === id);
-    this.setState({ purchaising: true, selectedTodo });
+    this.setState({ shown: true, selectedTodo });
   };
 
   render() {
@@ -68,7 +68,7 @@ class TodoList extends Component {
     let todoForm = (
       <AddTodoForm
         addTodo={this.props.addTodo}
-        purchaseCancel={this.purchaseCancelHandler}
+        hideModalHandler={this.hideModalHandler}
       />
     );
     if (this.state.selectedTodo) {
@@ -76,23 +76,20 @@ class TodoList extends Component {
         <UpdateTodoForm
           selectedTodo={this.state.selectedTodo}
           updateTodo={this.props.updateTodo}
-          purchaseCancel={this.purchaseCancelHandler}
+          hideModalHandler={this.hideModalHandler}
         />
       );
     }
 
     return (
       <div>
-        <Modal
-          hidden={this.state.purchaising}
-          closeModal={this.purchaseCancelHandler}
-        >
+        <Modal shown={this.state.shown} closeModal={this.hideModalHandler}>
           {todoForm}
         </Modal>
         <section className="todoList">
           {todos}
           <article>
-            <Button btnType="plus" clickButton={this.purchaseHandler}>
+            <Button btnType="plus" clickButton={this.showModalHandler}>
               <h1>+</h1>
             </Button>
           </article>

@@ -40,7 +40,7 @@ class AddTodoForm extends Component {
     } catch (error) {
       this.setState({ error: error });
     }
-    this.props.purchaseCancel();
+    this.props.hideModalHandler();
   };
 
   render() {
@@ -70,7 +70,7 @@ class AddTodoForm extends Component {
             onChange={this.handleInputChange}
           />
         </label>
-        <Button btnType="cancel" clickButton={this.props.purchaseCancel}>
+        <Button btnType="cancel" clickButton={this.props.hideModalHandler}>
           Cancel
         </Button>
         <Button btnType="add" clickButton={this.addTodoHandler}>
@@ -84,7 +84,7 @@ class AddTodoForm extends Component {
 
 AddTodoForm.propTypes = {
   addTodo: PropTypes.func.isRequired,
-  purchaseCancel: PropTypes.func.isRequired
+  hideModalHandler: PropTypes.func.isRequired
 };
 
 export default AddTodoForm;
