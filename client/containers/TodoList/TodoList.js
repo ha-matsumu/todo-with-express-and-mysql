@@ -17,6 +17,9 @@ class TodoList extends Component {
       purchaising: false,
       selectedTodo: null
     };
+
+    this.purchaseHandler = this.purchaseHandler.bind(this);
+    this.purchaseCancelHandler = this.purchaseCancelHandler.bind(this);
   }
 
   componentDidMount() {
