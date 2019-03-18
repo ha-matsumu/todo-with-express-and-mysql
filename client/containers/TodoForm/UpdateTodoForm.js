@@ -89,7 +89,7 @@ class UpdateTodoForm extends Component {
           Cancel
         </Button>
         <Button btnType="update" clickButton={this.updateTodoHandler}>
-          Update Todo
+          Update
         </Button>
       </div>
     );
