@@ -74,7 +74,7 @@ class AddTodoForm extends Component {
           Cancel
         </Button>
         <Button btnType="add" clickButton={this.addTodoHandler}>
-          Add Todo
+          Add
         </Button>
         {error}
       </div>
