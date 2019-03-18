@@ -77,13 +77,17 @@ class TodoList extends Component {
           selectedTodo={this.state.selectedTodo}
           updateTodo={this.props.updateTodo}
           hideModalHandler={this.hideModalHandler}
+          deleteTodo={this.deleteTodo}
         />
       );
     }
 
     return (
       <div>
-        <Modal shown={this.state.shown} hideModalHandler={this.hideModalHandler}>
+        <Modal
+          shown={this.state.shown}
+          hideModalHandler={this.hideModalHandler}
+        >
           {todoForm}
         </Modal>
         <section className="todoList">
@@ -113,6 +117,7 @@ const mapDispatchToProps = dispatch => {
     fetchTodos: () => dispatch(actions.fetchTodos()),
     addTodo: todo => dispatch(actions.addTodo(todo)),
     updateTodo: todo => dispatch(actions.updateTodo(todo)),
+    deleteTodo: todoId => dispatch(Actions.deleteTodo(todoId)),
     fetchTodoById: todoId => dispatch(actions.fetchTodoById(todoId))
   };
 };
@@ -130,6 +135,7 @@ TodoList.propTypes = {
   fetchTodos: PropTypes.func.isRequired,
   addTodo: PropTypes.func.isRequired,
   updateTodo: PropTypes.func.isRequired,
+  deleteTodo: PropTypes.func.isRequired,
   fetchTodoById: PropTypes.func.isRequired
 };
 
