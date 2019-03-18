@@ -77,7 +77,7 @@ class TodoList extends Component {
           selectedTodo={this.state.selectedTodo}
           updateTodo={this.props.updateTodo}
           hideModalHandler={this.hideModalHandler}
-          deleteTodo={this.deleteTodo}
+          deleteTodo={this.props.deleteTodo}
         />
       );
     }
@@ -117,7 +117,7 @@ const mapDispatchToProps = dispatch => {
     fetchTodos: () => dispatch(actions.fetchTodos()),
     addTodo: todo => dispatch(actions.addTodo(todo)),
     updateTodo: todo => dispatch(actions.updateTodo(todo)),
-    deleteTodo: todoId => dispatch(Actions.deleteTodo(todoId)),
+    deleteTodo: todoId => dispatch(actions.deleteTodo(todoId)),
     fetchTodoById: todoId => dispatch(actions.fetchTodoById(todoId))
   };
 };
