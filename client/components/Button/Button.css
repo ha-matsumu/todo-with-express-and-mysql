@@ -13,7 +13,7 @@ button {
   color: lightgreen;
 }
 
-.cancel {
+.delete {
   border: 1px solid red;
   color: red;
 }
@@ -31,6 +31,7 @@ button {
 button:hover,
 button:active {
   color: white;
+  background-color: gray;
 }
 
 .add:hover,
@@ -40,8 +41,8 @@ button:active {
   background-color: lightgreen;
 }
 
-.cancel:hover,
-.cancel .update:active {
+.delete:hover,
+.delete .update:active {
   color: white;
   background-color: red;
 }
