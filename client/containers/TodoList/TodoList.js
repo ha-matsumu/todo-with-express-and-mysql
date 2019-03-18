@@ -6,29 +6,37 @@ import Todo from "../../components/Todo/Todo";
 import "./TodoList.css";
 import AddTodoForm from "../TodoForm/AddTodoForm";
 import UpdateTodoForm from "../TodoForm/UpdateTodoForm";
+import Modal from "../../components/UI/Modal/Modal";
+import Button from "../../components/Button/Button";
 import * as actions from "../../actions/index";
 
 class TodoList extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      shown: false,
       selectedTodo: null
     };
+
+    this.showModalHandler = this.showModalHandler.bind(this);
+    this.hideModalHandler = this.hideModalHandler.bind(this);
   }
 
   componentDidMount() {
     this.props.fetchTodos();
   }
 
-  selectTodoHandler = id => {
-    const selectedTodo = this.props.todos.find(todo => todo.id === id);
-    this.setState({ selectedTodo });
+  showModalHandler = () => {
+    this.setState({ shown: true });
   };
 
-  resetFormHandler = () => {
-    this.setState({
-      selectedTodo: null
-    });
+  hideModalHandler = () => {
+    this.setState({ shown: false, selectedTodo: null });
+  };
+
+  selectTodoHandler = id => {
+    const selectedTodo = this.props.todos.find(todo => todo.id === id);
+    this.setState({ shown: true, selectedTodo });
   };
 
   render() {
@@ -57,21 +65,35 @@ class TodoList extends Component {
       );
     });
 
-    let todoForm = <AddTodoForm addTodo={this.props.addTodo} />;
+    let todoForm = (
+      <AddTodoForm
+        addTodo={this.props.addTodo}
+        hideModalHandler={this.hideModalHandler}
+      />
+    );
     if (this.state.selectedTodo) {
       todoForm = (
         <UpdateTodoForm
           selectedTodo={this.state.selectedTodo}
           updateTodo={this.props.updateTodo}
-          resetFormHandler={this.resetFormHandler}
+          hideModalHandler={this.hideModalHandler}
         />
       );
     }
 
     return (
       <div>
-        <section>{todoForm}</section>
-        <section className="todoList">{todos}</section>
+        <Modal shown={this.state.shown} hideModalHandler={this.hideModalHandler}>
+          {todoForm}
+        </Modal>
+        <section className="todoList">
+          {todos}
+          <article>
+            <Button btnType="plus" clickButton={this.showModalHandler}>
+              <h1>+</h1>
+            </Button>
+          </article>
+        </section>
       </div>
     );
   }

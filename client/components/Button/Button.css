@@ -1,18 +1,54 @@
-.add,
-.update {
+button {
+  width: 100px;
   margin: 5px 5px;
   padding: 10px;
   font: inherit;
-  border: 1px solid lightgreen;
   background-color: transparent;
-  color: lightgreen;
   cursor: pointer;
+}
+
+.add,
+.update {
+  border: 1px solid lightgreen;
+  color: lightgreen;
+}
+
+.cancel {
+  border: 1px solid red;
+  color: red;
+}
+
+.plus {
+  width: 250px;
+  padding: 16px;
+  text-align: center;
+  border: 1px solid #eee;
+  margin: 10px;
+  box-sizing: border-box;
+  background-color: gray;
+}
+
+button:hover,
+button:active {
+  color: white;
 }
 
 .add:hover,
 .update:hover,
 .add .update:active,
 .update .update:active {
-  color: white;
   background-color: lightgreen;
 }
+
+.cancel:hover,
+.cancel .update:active {
+  color: white;
+  background-color: red;
+}
+
+.plus:hover,
+.plus:active {
+  background-color: #c0ddf5;
+}
+
+

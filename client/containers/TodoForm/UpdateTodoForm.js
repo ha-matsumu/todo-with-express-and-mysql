@@ -49,7 +49,7 @@ class UpdateTodoForm extends Component {
       completed: this.state.completed
     };
     await this.props.updateTodo(todo);
-    this.props.resetFormHandler();
+    this.props.hideModalHandler();
   };
 
   render() {
@@ -85,7 +85,12 @@ class UpdateTodoForm extends Component {
             <option value="true">true</option>
           </select>
         </label>
-        <Button btnType="update" clickButton={this.updateTodoHandler}>Update Todo</Button>
+        <Button btnType="cancel" clickButton={this.props.hideModalHandler}>
+          Cancel
+        </Button>
+        <Button btnType="update" clickButton={this.updateTodoHandler}>
+          Update
+        </Button>
       </div>
     );
   }
@@ -100,7 +105,7 @@ const mapStateToProps = state => {
 UpdateTodoForm.propTypes = {
   selectedTodo: PropTypes.object.isRequired,
   updateTodo: PropTypes.func.isRequired,
-  resetFormHandler: PropTypes.func.isRequired
+  hideModalHandler: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps)(UpdateTodoForm);
