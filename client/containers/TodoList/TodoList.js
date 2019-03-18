@@ -93,7 +93,7 @@ class TodoList extends Component {
           {todos}
           <article>
             <Button btnType="plus" clickButton={this.purchaseHandler}>
-              +
+              <h1>+</h1>
             </Button>
           </article>
         </section>
