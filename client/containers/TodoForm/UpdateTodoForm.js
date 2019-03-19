@@ -17,6 +17,7 @@ class UpdateTodoForm extends Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.updateTodoHandler = this.updateTodoHandler.bind(this);
+    this.deleteTodoHandler = this.deleteTodoHandler.bind(this);
   }
 
   componentDidUpdate(prevState) {
@@ -52,6 +53,14 @@ class UpdateTodoForm extends Component {
     this.props.hideModalHandler();
   };
 
+  deleteTodoHandler = async () => {
+    const confirmedDeletion = confirm("本当に削除しますか？");
+    if (confirmedDeletion) {
+      await this.props.deleteTodo(this.state.id);
+      this.props.hideModalHandler();
+    }
+  };
+
   render() {
     return (
       <div className="todoForm">
@@ -85,8 +94,11 @@ class UpdateTodoForm extends Component {
             <option value="true">true</option>
           </select>
         </label>
-        <Button btnType="cancel" clickButton={this.props.hideModalHandler}>
+        <Button clickButton={this.props.hideModalHandler}>
           Cancel
+        </Button>
+        <Button btnType="delete" clickButton={this.deleteTodoHandler}>
+          Delete
         </Button>
         <Button btnType="update" clickButton={this.updateTodoHandler}>
           Update
@@ -105,7 +117,8 @@ const mapStateToProps = state => {
 UpdateTodoForm.propTypes = {
   selectedTodo: PropTypes.object.isRequired,
   updateTodo: PropTypes.func.isRequired,
-  hideModalHandler: PropTypes.func.isRequired
+  hideModalHandler: PropTypes.func.isRequired,
+  deleteTodo: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps)(UpdateTodoForm);
