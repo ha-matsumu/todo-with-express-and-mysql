@@ -53,7 +53,7 @@ class Todo extends Component {
   render() {
     return this.props.connectDragSource(
       this.props.connectDropTarget(
-        <article className="todo" onClick={this.props.selectTodo} style={this.getItemStyles()}>
+        <article className="todo" style={this.getItemStyles()}>
           <h1>{this.props.title}</h1>
         </article>
       )

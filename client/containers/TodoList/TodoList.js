@@ -43,17 +43,27 @@ class TodoList extends Component {
     this.setState({ shown: true, selectedTodo });
   };
 
-  onDrop = async (toId, fromId) => {
+  dropTodo = async (toId, fromId) => {
     const todos = this.props.todos.slice();
     const toIndex = todos.findIndex(i => i.id === toId);
     const fromIndex = todos.findIndex(i => i.id === fromId);
-    const toTodo = todos[toIndex];
-    const fromTodo = todos[fromIndex];
-    todos[toIndex] = fromTodo;
-    todos[fromIndex] = toTodo;
-    await this.props.changeOrderOfTodo(todos);
-    console.log(todos);
-    // this.setState({ items });// redux側のtodosを変更しなければならない
+    const toTodo = {
+      id: todos[toIndex].id,
+      title: todos[toIndex].title,
+      body: todos[toIndex].body,
+      completed: todos[toIndex].completed
+    }
+    const fromTodo = {
+      id: todos[fromIndex].id,
+      title: todos[fromIndex].title,
+      body: todos[fromIndex].body,
+      completed: todos[fromIndex].completed
+    }
+    console.log("to : ", toTodo);
+    console.log("from : ", fromTodo);
+    await this.props.updateTodo(toTodo);
+    await this.props.updateTodo(fromTodo);
+    console.log(this.props.todos);
   };
 
   render() {
@@ -69,8 +79,6 @@ class TodoList extends Component {
       );
     }
 
-    console.log(this.props.todos);
-
     const todos = this.props.todos.map(todo => {
       return (
         <Todo
@@ -80,7 +88,7 @@ class TodoList extends Component {
           body={todo.body}
           completed={todo.completed}
           selectTodo={this.selectTodoHandler.bind(this, todo.id)}
-          onDrop={this.onDrop.bind(this)}
+          onDrop={this.dropTodo.bind(this)}
         />
       );
     });
@@ -147,8 +155,7 @@ const mapDispatchToProps = dispatch => {
     addTodo: todo => dispatch(actions.addTodo(todo)),
     updateTodo: todo => dispatch(actions.updateTodo(todo)),
     deleteTodo: todoId => dispatch(actions.deleteTodo(todoId)),
-    fetchTodoById: todoId => dispatch(actions.fetchTodoById(todoId)),
-    changeOrderOfTodo: todos => dispatch(actions.changeOrderOfTodo(todos))
+    fetchTodoById: todoId => dispatch(actions.fetchTodoById(todoId))
   };
 };
 
