@@ -53,19 +53,13 @@ class Todo extends Component {
   render() {
     return this.props.connectDragSource(
       this.props.connectDropTarget(
-        <article className="todo" style={this.getItemStyles()}>
+        <article className="todo" onClick={this.props.selectTodo} style={this.getItemStyles()}>
           <h1>{this.props.title}</h1>
         </article>
       )
     );
   }
 }
-
-// const Todo = props => (
-//   <article className="todo" onClick={props.selectTodo}>
-//     <h1>{props.title}</h1>
-//   </article>
-// );
 
 Todo.propTypes = {
   id: PropTypes.number.isRequired,
