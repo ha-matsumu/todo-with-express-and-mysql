@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { DragDropContext } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
+import TouchBackend from "react-dnd-touch-backend";
 
 import Todo from "../../components/Todo/Todo";
 import "./TodoList.css";
@@ -8,6 +11,7 @@ import AddTodoForm from "../TodoForm/AddTodoForm";
 import UpdateTodoForm from "../TodoForm/UpdateTodoForm";
 import Modal from "../../components/UI/Modal/Modal";
 import Button from "../../components/Button/Button";
+import CustomDragLayer from "./CustomDragLayer";
 import * as actions from "../../actions/index";
 
 class TodoList extends Component {
@@ -39,6 +43,19 @@ class TodoList extends Component {
     this.setState({ shown: true, selectedTodo });
   };
 
+  onDrop = async (toId, fromId) => {
+    const todos = this.props.todos.slice();
+    const toIndex = todos.findIndex(i => i.id === toId);
+    const fromIndex = todos.findIndex(i => i.id === fromId);
+    const toTodo = todos[toIndex];
+    const fromTodo = todos[fromIndex];
+    todos[toIndex] = fromTodo;
+    todos[fromIndex] = toTodo;
+    await this.props.changeOrderOfTodo(todos);
+    console.log(todos);
+    // this.setState({ items });// redux側のtodosを変更しなければならない
+  };
+
   render() {
     if (this.props.loading) {
       return <p style={{ textAlign: "center" }}>Now loading...</p>;
@@ -52,6 +69,8 @@ class TodoList extends Component {
       );
     }
 
+    console.log(this.props.todos);
+
     const todos = this.props.todos.map(todo => {
       return (
         <Todo
@@ -61,6 +80,7 @@ class TodoList extends Component {
           body={todo.body}
           completed={todo.completed}
           selectTodo={this.selectTodoHandler.bind(this, todo.id)}
+          onDrop={this.onDrop.bind(this)}
         />
       );
     });
@@ -84,6 +104,7 @@ class TodoList extends Component {
 
     return (
       <div>
+        {(isAndroid() || isIOS()) && <CustomDragLayer />}
         <Modal
           shown={this.state.shown}
           hideModalHandler={this.hideModalHandler}
@@ -103,6 +124,14 @@ class TodoList extends Component {
   }
 }
 
+function isAndroid() {
+  return !!window.navigator.userAgent.match(/Android/);
+}
+
+function isIOS() {
+  return !!window.navigator.userAgent.match(/iPhone|iPad|iPod/);
+}
+
 const mapStateToProps = state => {
   return {
     todos: state.todos.todos,
@@ -118,7 +147,8 @@ const mapDispatchToProps = dispatch => {
     addTodo: todo => dispatch(actions.addTodo(todo)),
     updateTodo: todo => dispatch(actions.updateTodo(todo)),
     deleteTodo: todoId => dispatch(actions.deleteTodo(todoId)),
-    fetchTodoById: todoId => dispatch(actions.fetchTodoById(todoId))
+    fetchTodoById: todoId => dispatch(actions.fetchTodoById(todoId)),
+    changeOrderOfTodo: todos => dispatch(actions.changeOrderOfTodo(todos))
   };
 };
 
@@ -139,7 +169,19 @@ TodoList.propTypes = {
   fetchTodoById: PropTypes.func.isRequired
 };
 
+// export default DragDropContext(
+//   isAndroid() || isIOS() ? TouchBackend : HTML5Backend
+// )(
+//   connect(
+//     mapStateToProps,
+//     mapDispatchToProps
+//   )(TodoList)
+// );
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TodoList);
+)(
+  DragDropContext(isAndroid() || isIOS() ? TouchBackend : HTML5Backend)(
+    TodoList
+  )
+);
