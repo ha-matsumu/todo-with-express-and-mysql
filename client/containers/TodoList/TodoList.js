@@ -43,27 +43,20 @@ class TodoList extends Component {
     this.setState({ shown: true, selectedTodo });
   };
 
-  dropTodo = async (toId, fromId) => {
+  dropTodoHandler = async (toId, fromId) => {
     const todos = this.props.todos.slice();
     const toIndex = todos.findIndex(i => i.id === toId);
     const fromIndex = todos.findIndex(i => i.id === fromId);
     const toTodo = {
-      id: todos[toIndex].id,
-      title: todos[toIndex].title,
-      body: todos[toIndex].body,
-      completed: todos[toIndex].completed
-    }
-    const fromTodo = {
+      ...todos[toIndex],
       id: todos[fromIndex].id,
-      title: todos[fromIndex].title,
-      body: todos[fromIndex].body,
-      completed: todos[fromIndex].completed
-    }
-    console.log("to : ", toTodo);
-    console.log("from : ", fromTodo);
+    };
+    const fromTodo = {
+      ...todos[fromIndex],
+      id: todos[toIndex].id,
+    };
     await this.props.updateTodo(toTodo);
     await this.props.updateTodo(fromTodo);
-    console.log(this.props.todos);
   };
 
   render() {
@@ -88,7 +81,7 @@ class TodoList extends Component {
           body={todo.body}
           completed={todo.completed}
           selectTodo={this.selectTodoHandler.bind(this, todo.id)}
-          onDrop={this.dropTodo.bind(this)}
+          onDrop={this.dropTodoHandler.bind(this)}
         />
       );
     });
@@ -176,14 +169,6 @@ TodoList.propTypes = {
   fetchTodoById: PropTypes.func.isRequired
 };
 
-// export default DragDropContext(
-//   isAndroid() || isIOS() ? TouchBackend : HTML5Backend
-// )(
-//   connect(
-//     mapStateToProps,
-//     mapDispatchToProps
-//   )(TodoList)
-// );
 export default connect(
   mapStateToProps,
   mapDispatchToProps
