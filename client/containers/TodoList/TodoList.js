@@ -11,7 +11,6 @@ import AddTodoForm from "../TodoForm/AddTodoForm";
 import UpdateTodoForm from "../TodoForm/UpdateTodoForm";
 import Modal from "../../components/UI/Modal/Modal";
 import Button from "../../components/Button/Button";
-import CustomDragLayer from "./CustomDragLayer";
 import * as actions from "../../actions/index";
 
 class TodoList extends Component {
@@ -105,7 +104,6 @@ class TodoList extends Component {
 
     return (
       <div>
-        {(isAndroid() || isIOS()) && <CustomDragLayer />}
         <Modal
           shown={this.state.shown}
           hideModalHandler={this.hideModalHandler}
