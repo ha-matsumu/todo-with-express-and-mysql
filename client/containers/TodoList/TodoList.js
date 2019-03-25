@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { DragDropContext } from "react-dnd";
+import HTML5Backend from "react-dnd-html5-backend";
+import TouchBackend from "react-dnd-touch-backend";
 
 import Todo from "../../components/Todo/Todo";
 import "./TodoList.css";
@@ -39,6 +42,22 @@ class TodoList extends Component {
     this.setState({ shown: true, selectedTodo });
   };
 
+  dropTodoHandler = async (toId, fromId) => {
+    const todos = this.props.todos.slice();
+    const toIndex = todos.findIndex(i => i.id === toId);
+    const fromIndex = todos.findIndex(i => i.id === fromId);
+    const toTodo = {
+      ...todos[toIndex],
+      order_number: todos[fromIndex].order_number
+    };
+    const fromTodo = {
+      ...todos[fromIndex],
+      order_number: todos[toIndex].order_number
+    };
+    await this.props.updateTodo(toTodo);
+    await this.props.updateTodo(fromTodo);
+  };
+
   render() {
     if (this.props.loading) {
       return <p style={{ textAlign: "center" }}>Now loading...</p>;
@@ -61,6 +80,7 @@ class TodoList extends Component {
           body={todo.body}
           completed={todo.completed}
           selectTodo={this.selectTodoHandler.bind(this, todo.id)}
+          onDrop={this.dropTodoHandler.bind(this)}
         />
       );
     });
@@ -103,6 +123,14 @@ class TodoList extends Component {
   }
 }
 
+function isAndroid() {
+  return !!window.navigator.userAgent.match(/Android/);
+}
+
+function isIOS() {
+  return !!window.navigator.userAgent.match(/iPhone|iPad|iPod/);
+}
+
 const mapStateToProps = state => {
   return {
     todos: state.todos.todos,
@@ -142,4 +170,8 @@ TodoList.propTypes = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TodoList);
+)(
+  DragDropContext(isAndroid() || isIOS() ? TouchBackend : HTML5Backend)(
+    TodoList
+  )
+);
