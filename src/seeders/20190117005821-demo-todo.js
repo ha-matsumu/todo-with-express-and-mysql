@@ -6,8 +6,7 @@ module.exports = {
       return {
         title: `demo title ${num}`,
         body: `I will show demo in meetup ${num}.`,
-        completed: false,
-        order_number: num
+        completed: false
       };
     });
 
