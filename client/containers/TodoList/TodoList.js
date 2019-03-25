@@ -48,11 +48,11 @@ class TodoList extends Component {
     const fromIndex = todos.findIndex(i => i.id === fromId);
     const toTodo = {
       ...todos[toIndex],
-      id: todos[fromIndex].id,
+      order_number: todos[fromIndex].order_number
     };
     const fromTodo = {
       ...todos[fromIndex],
-      id: todos[toIndex].id,
+      order_number: todos[toIndex].order_number
     };
     await this.props.updateTodo(toTodo);
     await this.props.updateTodo(fromTodo);
