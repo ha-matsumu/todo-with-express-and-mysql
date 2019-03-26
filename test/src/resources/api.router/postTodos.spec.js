@@ -1,14 +1,26 @@
 const assert = require("power-assert");
 const requestHelper = require("../requestHelper");
+const todoFactory = require("../../factories/todo");
 const truncate = require("../../truncate");
-let createdTodoid;
 
 describe("POST /api/todos", () => {
+  before(async () => {
+    const promises = [];
+    for (let i = 0; i < 5; i++) {
+      promises.push(todoFactory());
+    }
+    await Promise.all(promises);
+  });
+
   it("作成したデータの確認(正常系)", () => {
     return requestHelper
       .requestAPI("post", "/api/todos", 200)
       .set("Accept", "application/json")
-      .send({ title: "titleA", body: "bodyA", completed: false })
+      .send({
+        title: "titleA",
+        body: "bodyA",
+        completed: false,
+      })
       .then(response => {
         // 型チェック
         assert.equal(
@@ -30,6 +42,11 @@ describe("POST /api/todos", () => {
           response.body.completed,
           0,
           "completedは'boolean'型ではありません。"
+        );
+        assert.equal(
+          typeof response.body.order_number,
+          "number",
+          "order_numberは'number'型ではありません。"
         );
         assert.equal(
           typeof response.body.createdAt,
@@ -91,6 +108,7 @@ describe("GET /api/todos/:id", () => {
           title: "titleA",
           body: "bodyA",
           completed: false,
+          order_number: createdTodoId,
           createdAt: response.body.createdAt,
           updatedAt: response.body.updatedAt
         });
