@@ -29,14 +29,17 @@ module.exports = {
   },
 
   async postTodo(req, res) {
+    let order_number;
     const transaction = await index.sequelize.transaction();
     try {
-      const maxId = await index.Todo.max("id").catch(error => {
-        throwError("Server Error", 500);
-      });
+      const maxOrderNumber = await index.Todo.max("order_number").catch(
+        error => {
+          throwError("Server Error", 500);
+        }
+      );
 
       if (maxId) {
-        order_number = maxId + 1;
+        order_number = maxOrderNumber + 1;
       }
 
       // inset into Todo(title, body, completed, order_number)
