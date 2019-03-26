@@ -40,7 +40,7 @@ module.exports = {
         order_number = maxId + 1;
       }
 
-      // inset into Todo(title, body, completed, order_number)
+      // insert into Todo(title, body, completed, order_number)
       // values(value1, value2, value3, value4);
       const todo = await index.Todo.create(
         {
