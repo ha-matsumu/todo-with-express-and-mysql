@@ -97,7 +97,8 @@ module.exports = {
           {
             title: req.body.title,
             body: req.body.body,
-            completed: req.body.completed
+            completed: req.body.completed,
+            order_number: req.body.order_number
           },
           { transaction }
         )
