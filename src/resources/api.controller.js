@@ -11,9 +11,9 @@ module.exports = {
   // 各リクエストに対して実行されるメソッドを定義
   async getTodos(req, res) {
     try {
-      // select * from Todo order by id;
+      // select * from Todo order by order_number;
       const todos = await index.Todo.findAll({
-        order: [["id", "ASC"]]
+        order: [["order_number", "ASC"]]
       }).catch(error => {
         throwError("Server Error", 500);
       });
