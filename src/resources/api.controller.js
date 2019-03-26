@@ -31,17 +31,24 @@ module.exports = {
   async postTodo(req, res) {
     const transaction = await index.sequelize.transaction();
     try {
-      // inset into Todo(title, body) values(value1, value2);
+      const maxId = await index.Todo.max("id");
+      order_number = maxId + 1;
+
+      // inset into Todo(title, body, completed, order_number)
+      // values(value1, value2, value3, value4);
       const todo = await index.Todo.create(
         {
           title: req.body.title,
           body: req.body.body,
-          completed: req.body.completed
+          completed: req.body.completed,
+          order_number: order_number
         },
         { transaction }
       ).catch(error => {
         throwError("Server Error", 500);
       });
+
+      console.log(typeof maxId);
 
       await transaction.commit();
       res.status(200).json(todo);
