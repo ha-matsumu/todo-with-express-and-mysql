@@ -2,6 +2,10 @@ const assert = require("power-assert");
 const requestHelper = require("../requestHelper");
 const todoFactory = require("../../factories/todo");
 const truncate = require("../../truncate");
+const Todo = require("../../../../src/models/index").Todo;
+
+let createdTodoId;
+let expectedOrderNumber;
 
 describe("POST /api/todos", () => {
   before(async () => {
@@ -10,6 +14,9 @@ describe("POST /api/todos", () => {
       promises.push(todoFactory());
     }
     await Promise.all(promises);
+
+    const maxOrderNumber = await Todo.max("order_number");
+    expectedOrderNumber = maxOrderNumber + 1;
   });
 
   it("作成したデータの確認(正常系)", () => {
@@ -19,7 +26,7 @@ describe("POST /api/todos", () => {
       .send({
         title: "titleA",
         body: "bodyA",
-        completed: false,
+        completed: false
       })
       .then(response => {
         // 型チェック
@@ -108,7 +115,7 @@ describe("GET /api/todos/:id", () => {
           title: "titleA",
           body: "bodyA",
           completed: false,
-          order_number: createdTodoId,
+          order_number: expectedOrderNumber,
           createdAt: response.body.createdAt,
           updatedAt: response.body.updatedAt
         });
