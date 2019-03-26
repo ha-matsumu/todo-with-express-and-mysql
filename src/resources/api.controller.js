@@ -31,8 +31,13 @@ module.exports = {
   async postTodo(req, res) {
     const transaction = await index.sequelize.transaction();
     try {
-      const maxId = await index.Todo.max("id");
-      order_number = maxId + 1;
+      const maxId = await index.Todo.max("id").catch(error => {
+        throwError("Server Error", 500);
+      });
+
+      if (maxId) {
+        order_number = maxId + 1;
+      }
 
       // inset into Todo(title, body, completed, order_number)
       // values(value1, value2, value3, value4);
@@ -47,8 +52,6 @@ module.exports = {
       ).catch(error => {
         throwError("Server Error", 500);
       });
-
-      console.log(typeof maxId);
 
       await transaction.commit();
       res.status(200).json(todo);
