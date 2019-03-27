@@ -47,6 +47,11 @@ describe("GET /api/todos", () => {
             "completedは'boolean'型ではありません。"
           );
           assert.equal(
+            typeof todo.order_number,
+            "number",
+            "order_numberは'number'型ではありません。"
+          );
+          assert.equal(
             typeof todo.createdAt,
             "string",
             "createdAtは'string'型ではありません。"

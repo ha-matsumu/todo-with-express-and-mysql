@@ -1,14 +1,33 @@
 const assert = require("power-assert");
 const requestHelper = require("../requestHelper");
+const todoFactory = require("../../factories/todo");
 const truncate = require("../../truncate");
-let createdTodoid;
+const Todo = require("../../../../src/models/index").Todo;
+
+let createdTodoId;
+let expectedOrderNumber;
 
 describe("POST /api/todos", () => {
+  before(async () => {
+    const promises = [];
+    for (let i = 0; i < 5; i++) {
+      promises.push(todoFactory());
+    }
+    await Promise.all(promises);
+
+    const maxOrderNumber = await Todo.max("order_number");
+    expectedOrderNumber = maxOrderNumber + 1;
+  });
+
   it("作成したデータの確認(正常系)", () => {
     return requestHelper
       .requestAPI("post", "/api/todos", 200)
       .set("Accept", "application/json")
-      .send({ title: "titleA", body: "bodyA", completed: false })
+      .send({
+        title: "titleA",
+        body: "bodyA",
+        completed: false
+      })
       .then(response => {
         // 型チェック
         assert.equal(
@@ -30,6 +49,11 @@ describe("POST /api/todos", () => {
           response.body.completed,
           0,
           "completedは'boolean'型ではありません。"
+        );
+        assert.equal(
+          typeof response.body.order_number,
+          "number",
+          "order_numberは'number'型ではありません。"
         );
         assert.equal(
           typeof response.body.createdAt,
@@ -91,6 +115,52 @@ describe("GET /api/todos/:id", () => {
           title: "titleA",
           body: "bodyA",
           completed: false,
+          order_number: expectedOrderNumber,
+          createdAt: response.body.createdAt,
+          updatedAt: response.body.updatedAt
+        });
+      });
+  });
+});
+
+describe("POST /api/todos", () => {
+  it("DB内がからの時'order_number'が'undefined'かの確認", () => {
+    return requestHelper
+      .requestAPI("post", "/api/todos", 200)
+      .set("Accept", "application/json")
+      .send({
+        title: "titleA",
+        body: "bodyA",
+        completed: false
+      })
+      .then(response => {
+        assert.equal(
+          typeof response.body.order_number,
+          "undefined",
+          "order_numberは'undefined'ではありません。"
+        );
+        createdTodoId = response.body.id;
+      });
+  });
+});
+
+describe("POST /api/todos", () => {
+  after(async () => {
+    await truncate();
+  });
+
+  it("'order_number'が'undefined'の時に'NULL'がセットされるかの確認", () => {
+    return requestHelper
+      .requestAPI("get", "/api/todos/" + createdTodoId, 200)
+      .set("Accept", "application/json")
+      .then(response => {
+        // DBの各カラムの値チェック
+        assert.deepEqual(response.body, {
+          id: createdTodoId,
+          title: "titleA",
+          body: "bodyA",
+          completed: false,
+          order_number: null,
           createdAt: response.body.createdAt,
           updatedAt: response.body.updatedAt
         });

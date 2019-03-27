@@ -2,10 +2,13 @@ const assert = require("power-assert");
 const requestHelper = require("../requestHelper");
 const todoFactory = require("../../factories/todo");
 const truncate = require("../../truncate");
+const faker = require("faker");
 const Todo = require("../../../../src/models/index").Todo;
 
 let targetTodo;
 let url;
+const randomNumber = faker.random.number();
+
 describe("PUT /api/todos/:id", () => {
   before(async () => {
     const promises = [];
@@ -22,7 +25,12 @@ describe("PUT /api/todos/:id", () => {
     return requestHelper
       .requestAPI("put", url, 200)
       .set("Accept", "application/json")
-      .send({ title: "titleA", body: "bodyA", completed: true })
+      .send({
+        title: "titleA",
+        body: "bodyA",
+        completed: true,
+        order_number: randomNumber
+      })
       .then(response => {
         assert.equal(
           response.body.title,
@@ -38,6 +46,11 @@ describe("PUT /api/todos/:id", () => {
           response.body.completed,
           true,
           "completedの値が正しくありません。"
+        );
+        assert.equal(
+          response.body.order_number,
+          randomNumber,
+          "order_numberの値が正しくありません。"
         );
       });
   });
@@ -71,6 +84,7 @@ describe("GET /api/todos/:id", () => {
           title: "titleA",
           body: "bodyA",
           completed: true,
+          order_number: randomNumber,
           createdAt: response.body.createdAt,
           updatedAt: response.body.updatedAt
         });

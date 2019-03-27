@@ -11,9 +11,9 @@ module.exports = {
   // 各リクエストに対して実行されるメソッドを定義
   async getTodos(req, res) {
     try {
-      // select * from Todo order by id;
+      // select * from Todo order by order_number;
       const todos = await index.Todo.findAll({
-        order: [["id", "ASC"]]
+        order: [["order_number", "ASC"]]
       }).catch(error => {
         throwError("Server Error", 500);
       });
@@ -31,12 +31,25 @@ module.exports = {
   async postTodo(req, res) {
     const transaction = await index.sequelize.transaction();
     try {
-      // inset into Todo(title, body) values(value1, value2);
+      const maxOrderNumber = await index.Todo.max("order_number").catch(
+        error => {
+          throwError("Server Error", 500);
+        }
+      );
+
+      let order_number;
+      if (maxOrderNumber) {
+        order_number = maxOrderNumber + 1;
+      }
+
+      // insert into Todo(title, body, completed, order_number)
+      // values(value1, value2, value3, value4);
       const todo = await index.Todo.create(
         {
           title: req.body.title,
           body: req.body.body,
-          completed: req.body.completed
+          completed: req.body.completed,
+          order_number
         },
         { transaction }
       ).catch(error => {
@@ -90,7 +103,8 @@ module.exports = {
           {
             title: req.body.title,
             body: req.body.body,
-            completed: req.body.completed
+            completed: req.body.completed,
+            order_number: req.body.order_number
           },
           { transaction }
         )

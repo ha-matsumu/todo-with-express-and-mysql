@@ -5,7 +5,8 @@ const data = (props = {}) => {
   const defaultProps = {
     title: faker.name.title(),
     body: faker.lorem.sentence(),
-    completed: faker.random.boolean()
+    completed: faker.random.boolean(),
+    order_number: faker.random.number()
   };
   return Object.assign({}, defaultProps, props);
 };
