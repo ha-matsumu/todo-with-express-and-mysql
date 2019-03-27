@@ -137,7 +137,7 @@ describe("POST /api/todos", () => {
         assert.equal(
           typeof response.body.order_number,
           "undefined",
-          "order_numberは'null'ではありません。"
+          "order_numberは'undefined'ではありません。"
         );
         createdTodoId = response.body.id;
       });
