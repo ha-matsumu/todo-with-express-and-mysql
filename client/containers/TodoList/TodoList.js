@@ -67,7 +67,6 @@ class TodoList extends Component {
 
   render() {
     if (this.props.loading) {
-      // return <p style={{ textAlign: "center" }}>Now loading...</p>;
       return <Spinner />;
     }
 
