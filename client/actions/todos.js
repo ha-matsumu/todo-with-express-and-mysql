@@ -63,7 +63,7 @@ export const fetchTodos = () => async dispatch => {
 export const addTodo = todo => async dispatch => {
   try {
     dispatch(requestStart());
-    const response = await axios.post("/api/todo", todo);
+    const response = await axios.post("/api/todos", todo);
     dispatch(addTodoSuccess(response.data));
   } catch (error) {
     dispatch(requestError(error));
