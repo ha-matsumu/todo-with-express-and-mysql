@@ -29,6 +29,12 @@ class TodoList extends Component {
     this.props.fetchTodos();
   }
 
+  componentDidUpdate(prevProps) {
+    if (JSON.stringify(prevProps.todos) !== JSON.stringify(this.props.todos)) {
+      this.props.fetchTodos();
+    }
+  }
+
   showModalHandler = () => {
     this.setState({ shown: true });
   };
