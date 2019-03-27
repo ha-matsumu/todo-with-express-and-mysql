@@ -29,7 +29,6 @@ module.exports = {
   },
 
   async postTodo(req, res) {
-    let order_number;
     const transaction = await index.sequelize.transaction();
     try {
       const maxOrderNumber = await index.Todo.max("order_number").catch(
@@ -38,6 +37,7 @@ module.exports = {
         }
       );
 
+      let order_number;
       if (maxOrderNumber) {
         order_number = maxOrderNumber + 1;
       }
