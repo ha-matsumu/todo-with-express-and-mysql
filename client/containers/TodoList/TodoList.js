@@ -11,6 +11,7 @@ import AddTodoForm from "../TodoForm/AddTodoForm";
 import UpdateTodoForm from "../TodoForm/UpdateTodoForm";
 import Modal from "../../components/UI/Modal/Modal";
 import Button from "../../components/Button/Button";
+import Spinner from "../../components/UI/Spinner/Spinner";
 import * as actions from "../../actions/index";
 
 class TodoList extends Component {
@@ -66,7 +67,8 @@ class TodoList extends Component {
 
   render() {
     if (this.props.loading) {
-      return <p style={{ textAlign: "center" }}>Now loading...</p>;
+      // return <p style={{ textAlign: "center" }}>Now loading...</p>;
+      return <Spinner />;
     }
 
     if (this.props.error) {
