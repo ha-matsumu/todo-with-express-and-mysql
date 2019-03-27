@@ -49,7 +49,7 @@ module.exports = {
           title: req.body.title,
           body: req.body.body,
           completed: req.body.completed,
-          order_number: order_number
+          order_number
         },
         { transaction }
       ).catch(error => {
