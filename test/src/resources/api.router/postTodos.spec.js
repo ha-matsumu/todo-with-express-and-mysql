@@ -122,3 +122,48 @@ describe("GET /api/todos/:id", () => {
       });
   });
 });
+
+describe("POST /api/todos", () => {
+  it("DB内がからの時'order_number'が'undefined'かの確認", () => {
+    return requestHelper
+      .requestAPI("post", "/api/todos", 200)
+      .set("Accept", "application/json")
+      .send({
+        title: "titleA",
+        body: "bodyA",
+        completed: false
+      })
+      .then(response => {
+        assert.equal(
+          typeof response.body.order_number,
+          "undefined",
+          "order_numberは'null'ではありません。"
+        );
+        createdTodoId = response.body.id;
+      });
+  });
+});
+
+describe("POST /api/todos", () => {
+  after(async () => {
+    await truncate();
+  });
+
+  it("'order_number'が'undefined'の時に'NULL'がセットされるかの確認", () => {
+    return requestHelper
+      .requestAPI("get", "/api/todos/" + createdTodoId, 200)
+      .set("Accept", "application/json")
+      .then(response => {
+        // DBの各カラムの値チェック
+        assert.deepEqual(response.body, {
+          id: createdTodoId,
+          title: "titleA",
+          body: "bodyA",
+          completed: false,
+          order_number: null,
+          createdAt: response.body.createdAt,
+          updatedAt: response.body.updatedAt
+        });
+      });
+  });
+});
