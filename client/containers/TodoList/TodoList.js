@@ -12,6 +12,8 @@ import UpdateTodoForm from "../TodoForm/UpdateTodoForm";
 import Modal from "../../components/UI/Modal/Modal";
 import Button from "../../components/Button/Button";
 import Spinner from "../../components/UI/Spinner/Spinner";
+import WithErrorHandler from "../../components/hoc/WithErrorHandler/WithErrorHandler";
+import axios from "axios";
 import * as actions from "../../actions/index";
 
 class TodoList extends Component {
@@ -66,8 +68,9 @@ class TodoList extends Component {
   };
 
   render() {
+    let todos = null;
     if (this.props.loading) {
-      return <Spinner />;
+      todos = <Spinner />;
     }
 
     if (this.props.error) {
@@ -78,7 +81,7 @@ class TodoList extends Component {
       );
     }
 
-    const todos = this.props.todos.map(todo => {
+    todos = this.props.todos.map(todo => {
       return (
         <Todo
           key={todo.id}
@@ -178,7 +181,10 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(
-  DragDropContext(isAndroid() || isIOS() ? TouchBackend : HTML5Backend)(
-    TodoList
+  WithErrorHandler(
+    DragDropContext(isAndroid() || isIOS() ? TouchBackend : HTML5Backend)(
+      TodoList
+    ),
+    axios
   )
 );
