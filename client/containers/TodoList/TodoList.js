@@ -71,14 +71,6 @@ class TodoList extends Component {
       todos = <Spinner />;
     }
 
-    if (this.props.error) {
-      return (
-        <p style={{ textAlign: "center" }}>
-          {this.props.error.statusCode} {this.props.error.message}
-        </p>
-      );
-    }
-
     todos = this.props.todos.map(todo => {
       return (
         <Todo
