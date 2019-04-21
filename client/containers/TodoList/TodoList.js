@@ -68,7 +68,7 @@ class TodoList extends Component {
   render() {
     let todos = null;
     if (this.props.loading) {
-      todos = <Spinner />;
+      return <Spinner />;
     }
 
     todos = this.props.todos.map(todo => {
