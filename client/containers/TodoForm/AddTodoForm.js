@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import Button from "../../components/Button/Button";
 import "./TodoForm.css";
+import Spinner from "../../components/UI/Spinner/Spinner";
 
 class AddTodoForm extends Component {
   constructor(props) {
@@ -37,6 +38,7 @@ class AddTodoForm extends Component {
     };
     try {
       await this.props.addTodo(todo);
+      this.setState({ title: "", body: "", completed: false });
     } catch (error) {
       this.setState({ error: error });
     }
@@ -44,12 +46,9 @@ class AddTodoForm extends Component {
   };
 
   render() {
-    let error = null;
-    if (this.state.error) {
-      error = <p style={{ textAlign: "center" }}>{this.state.error}</p>;
-    }
+    let form;
 
-    return (
+    form = (
       <div className="todoForm">
         <h1>Add a Todo</h1>
         <label>
@@ -76,9 +75,14 @@ class AddTodoForm extends Component {
         <Button btnType="add" clickButton={this.addTodoHandler}>
           Add
         </Button>
-        {error}
       </div>
     );
+
+    if (this.props.loading) {
+      form = <Spinner />;
+    }
+
+    return <>{form}</>;
   }
 }
 
