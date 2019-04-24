@@ -1,23 +1,40 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import "./Modal.css";
 import Backdrop from "../Backdrop/Backdrop";
 
-const Modal = props => (
-  <>
-    <Backdrop shown={props.shown} clickBackdrop={props.hideModalHandler} />
-    <div
-      className="modal"
-      style={{
-        transform: props.shown ? "translateY(-100px)" : "translateY(-200vh)",
-        opacity: props.shown ? "1" : "0"
-      }}
-    >
-      {props.children}
-    </div>
-  </>
-);
+class Modal extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      nextProps.show !== this.props.shown ||
+      nextProps.children !== this.props.children
+    );
+  }
+
+  render() {
+    return (
+      <>
+        <Backdrop shown={this.props.shown} clickBackdrop={this.props.hideModalHandler} />
+        <div
+          className="modal"
+          style={{
+            transform: this.props.shown
+              ? "translateY(-100px)"
+              : "translateY(-200vh)",
+            opacity: this.props.shown ? "1" : "0"
+          }}
+        >
+          {this.props.children}
+        </div>
+      </>
+    );
+  }
+}
 
 Modal.propTypes = {
   shown: PropTypes.bool.isRequired,
