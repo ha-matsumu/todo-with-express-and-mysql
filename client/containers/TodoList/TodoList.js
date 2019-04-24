@@ -26,7 +26,9 @@ class TodoList extends Component {
 
     this.showModalHandler = this.showModalHandler.bind(this);
     this.hideModalHandler = this.hideModalHandler.bind(this);
+  }
 
+  componentDidMount() {
     this.props.fetchTodos();
   }
 
