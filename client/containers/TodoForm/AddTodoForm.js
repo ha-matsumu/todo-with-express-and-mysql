@@ -37,7 +37,6 @@ class AddTodoForm extends Component {
     };
     try {
       await this.props.addTodo(todo);
-      this.setState({ title: "", body: "", completed: false });
     } catch (error) {
       this.setState({ error: error });
     }
