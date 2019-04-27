@@ -13,7 +13,6 @@ import Modal from "../../components/UI/Modal/Modal";
 import Button from "../../components/Button/Button";
 import Spinner from "../../components/UI/Spinner/Spinner";
 import WithErrorHandler from "../../components/hoc/WithErrorHandler/WithErrorHandler";
-import axios from "axios";
 import * as actions from "../../actions/index";
 
 class TodoList extends Component {
@@ -175,7 +174,6 @@ export default connect(
   WithErrorHandler(
     DragDropContext(isAndroid() || isIOS() ? TouchBackend : HTML5Backend)(
       TodoList
-    ),
-    axios
+    )
   )
 );
