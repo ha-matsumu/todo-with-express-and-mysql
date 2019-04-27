@@ -68,12 +68,11 @@ class TodoList extends Component {
   };
 
   render() {
-    let todos = null;
     if (this.props.loading) {
       return <Spinner />;
     }
 
-    todos = this.props.todos.map(todo => {
+    const todos = this.props.todos.map(todo => {
       return (
         <Todo
           key={todo.id}
