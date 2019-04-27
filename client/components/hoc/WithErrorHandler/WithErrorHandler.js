@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import axios from 'axios';
 
 import Modal from "../../UI/Modal/Modal";
 
-const WithErrorHandler = (WrappedComponent, axios) => {
+const WithErrorHandler = (WrappedComponent) => {
   return class extends Component {
     constructor(props) {
       super(props);
