@@ -44,40 +44,36 @@ class AddTodoForm extends Component {
   };
 
   render() {
-    let error = null;
-    if (this.state.error) {
-      error = <p style={{ textAlign: "center" }}>{this.state.error}</p>;
-    }
-
     return (
-      <div className="todoForm">
-        <h1>Add a Todo</h1>
-        <label>
-          Title
-          <input
-            name="title"
-            type="text"
-            value={this.state.title}
-            onChange={this.handleInputChange}
-          />
-        </label>
-        <label>
-          Body
-          <textarea
-            name="body"
-            rows="4"
-            value={this.state.body}
-            onChange={this.handleInputChange}
-          />
-        </label>
-        <Button btnType="cancel" clickButton={this.props.hideModalHandler}>
-          Cancel
-        </Button>
-        <Button btnType="add" clickButton={this.addTodoHandler}>
-          Add
-        </Button>
-        {error}
-      </div>
+      <>
+        <div className="todoForm">
+          <h1>Add a Todo</h1>
+          <label>
+            Title
+            <input
+              name="title"
+              type="text"
+              value={this.state.title}
+              onChange={this.handleInputChange}
+            />
+          </label>
+          <label>
+            Body
+            <textarea
+              name="body"
+              rows="4"
+              value={this.state.body}
+              onChange={this.handleInputChange}
+            />
+          </label>
+          <Button btnType="cancel" clickButton={this.props.hideModalHandler}>
+            Cancel
+          </Button>
+          <Button btnType="add" clickButton={this.addTodoHandler}>
+            Add
+          </Button>
+        </div>
+      </>
     );
   }
 }
