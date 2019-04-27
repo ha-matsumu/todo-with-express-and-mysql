@@ -9,17 +9,13 @@ class Modal extends Component {
     super(props);
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return (
-      nextProps.show !== this.props.shown ||
-      nextProps.children !== this.props.children
-    );
-  }
-
   render() {
     return (
       <>
-        <Backdrop shown={this.props.shown} clickBackdrop={this.props.hideModalHandler} />
+        <Backdrop
+          shown={this.props.shown}
+          clickBackdrop={this.props.hideModalHandler}
+        />
         <div
           className="modal"
           style={{
